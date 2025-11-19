@@ -1,3 +1,5 @@
+package game;
+
 public class test2 {
     private String name;
     private int level;
