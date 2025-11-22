@@ -44,4 +44,37 @@ public class FakeBucketshotRoulette {
         System.out.println("莊家生命值: " + dealerHealth);
         System.out.println("剩餘子彈數: " + shotgun.size());
         } 
+    
+    private void PlayAction() {
+        displayStatus();
+        System.out.println("你的回合，選擇行動");
+        System.out.println("1. 射擊自己");
+        System.out.println("2. 射擊莊家");
+        int choice = scanner.nextInt();
+        boolean shootSelf = (choice == 1);
+        String shell = shotgun.remove(0); // 取第一顆子彈
+        System.out.println("扣下板機..."+(shell.equals("live") ? "實彈！" : "空包彈"));
+        if (shootSelf) {
+            if (shell.equals("live")) {
+                playerHealth--;
+                System.out.println("你中了自己的子彈，生命值減少1！");
+                playerTurn = false;
+            } else {
+                System.out.println("幸運！繼續你的回合");
+                playerTurn = true;
+            }
+        }
+        else {
+            if (shell.equals("live")) {
+                dealerHealth--;
+                System.out.println("你射中了莊家，莊家生命值減少1！");
+                playerTurn = true;
+            } else {
+                System.out.println("莊家躲過一劫，輪到莊家回合");
+                playerTurn = false;
+            }
+        }
+
+
     }
+}
