@@ -44,7 +44,7 @@ public class FakeBucketshotRoulette {
         System.out.println("莊家生命值: " + dealerHealth);
         System.out.println("剩餘子彈數: " + shotgun.size());
         } 
-    
+    //玩家邏輯
     private void PlayAction() {
         displayStatus();
         System.out.println("你的回合，選擇行動");
