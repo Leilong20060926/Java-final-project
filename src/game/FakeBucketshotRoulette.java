@@ -2,7 +2,7 @@ package game;
 
 import java.util.Scanner;
 
-import game.extention.GamePrinter;
+import game.extension.GamePrinter;
 
 import java.util.Random;
 import java.util.ArrayList;//比陣列更靈活

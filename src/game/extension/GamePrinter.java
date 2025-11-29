@@ -1,4 +1,4 @@
-package game.extention;
+package game.extension;
 
 public class GamePrinter {
     // 設定每個字元之間的延遲時間（毫秒）
