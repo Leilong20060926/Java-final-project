@@ -1,8 +1,11 @@
 package game;
 
 import java.util.Scanner;
+
+import game.extension.GamePrinter;
+
 import java.util.Random;
-import java.util.ArrayList;
+import java.util.ArrayList;//比陣列更靈活
 import java.util.List;
 import java.util.Collections;
 public class FakeBucketshotRoulette {
@@ -15,6 +18,8 @@ public class FakeBucketshotRoulette {
     private Random random;
     private Scanner scanner;
     private double dangerLevel = 0.2; // 危險等級，影響實彈比例
+    
+
     // 建構子
     public FakeBucketshotRoulette(){
         shotgun = new ArrayList<>();
@@ -23,8 +28,11 @@ public class FakeBucketshotRoulette {
         playerTurn = true; // 玩家先手
         random = new Random();
         scanner = new Scanner(System.in);
+        
     }
-    //初始化建構子
+    
+
+    //初始化子彈筒
     // 加上重新裝填子彈功能
     //危險等級邏輯一開始0.2每次重新裝填增加0.1上限1.0
     private void loadShotgun(boolean increaseDanger) {
@@ -48,62 +56,61 @@ public class FakeBucketshotRoulette {
 
         Collections.shuffle(shotgun);
 
-        System.out.println("子彈筒已裝填：共 " + totalShells +
+        GamePrinter.printSlow("子彈筒已裝填：共 " + totalShells +
                 " 發，其中實彈 " + liveShells +
                 " 發（本次上限比例：" + (int)(dangerLevel * 100) + "%）");
     }
     private void displayStatus() {
-        System.out.println("\n-- 目前狀態 --");
-        System.out.println("玩家生命值: " + playerHealth);
-        System.out.println("莊家生命值: " + dealerHealth);
-        System.out.println("剩餘子彈數: " + shotgun.size());
+        GamePrinter.printSlow("\n-- 目前狀態 --");
+        GamePrinter.printSlow("玩家生命值: " + playerHealth);
+        GamePrinter.printSlow("莊家生命值: " + dealerHealth);
+        GamePrinter.printSlow("剩餘子彈數: " + shotgun.size());
         } 
     //玩家邏輯
     //加上打完填裝危險子彈
    private void PlayAction() {
     displayStatus();
-    System.out.println("你的回合，選擇行動");
-    System.out.println("1. 射擊自己");
-    System.out.println("2. 射擊莊家");
+    GamePrinter.printSlow("你的回合，選擇行動");
+    GamePrinter.printSlow("1. 射擊自己");
+    GamePrinter.printSlow("2. 射擊莊家");
     int choice = scanner.nextInt();
     boolean shootSelf = (choice == 1);
 
     // 如果子彈筒沒子彈，重新裝填
     if (shotgun.isEmpty()) {
-        System.out.println("子彈打完了，重新裝填...");
+        GamePrinter.printSlow("子彈打完了，重新裝填...");
         loadShotgun(true); // 重新裝填危險模式
     }
 
     String shell = shotgun.remove(0); // 取第一顆子彈
-    System.out.println("扣下板機..." + (shell.equals("live") ? "實彈！" : "空包彈"));
+    GamePrinter.printSlow("扣下板機..." + (shell.equals("live") ? "實彈！" : "空包彈"));
     if (shootSelf) {
         if (shell.equals("live")) {
             playerHealth--;
-            System.out.println("你中了自己的子彈，生命值減少1！");
+            GamePrinter.printSlow("你中了自己的子彈，生命值減少1！");
             playerTurn = false;
         } else {
-            System.out.println("幸運！繼續你的回合");
+            GamePrinter.printSlow("幸運！繼續你的回合");
             playerTurn = true;
         }
     } else {
         if (shell.equals("live")) {
             dealerHealth--;
-            System.out.println("你射中了莊家，莊家生命值減少1！");
+            GamePrinter.printSlow("你射中了莊家，莊家生命值減少1！");
             playerTurn = true;
         } else {
-            System.out.println("莊家躲過一劫，輪到莊家回合");
+            GamePrinter.printSlow("莊家躲過一劫，輪到莊家回合");
             playerTurn = false;
         }
     }
 }
     //莊家邏輯
-    //加上打完填裝危險子彈
     private void dealerAction() {
     displayStatus();
 
     // 如果子彈筒沒子彈，重新裝填
     if (shotgun.isEmpty()) {
-        System.out.println("子彈打完了，重新裝填...");
+        GamePrinter.printSlow("子彈打完了，重新裝填...");
         loadShotgun(true);
     }
 
@@ -112,23 +119,23 @@ public class FakeBucketshotRoulette {
     String shell = shotgun.remove(0);
 
     if (shootSelf) {
-        System.out.println("莊家選擇射擊自己。扣下板機..." + (shell.equals("live") ? "實彈！" : "空包彈"));
+        GamePrinter.printSlow("莊家選擇射擊自己。扣下板機..." + (shell.equals("live") ? "實彈！" : "空包彈"));
         if (shell.equals("live")) {
             dealerHealth--;
-            System.out.println("莊家中了自己的子彈，生命值減少1！");
+            GamePrinter.printSlow("莊家中了自己的子彈，生命值減少1！");
             playerTurn = true;
         } else {
-            System.out.println("莊家繼續他的回合");
+            GamePrinter.printSlow("莊家繼續他的回合");
             playerTurn = false;
         }
     } else {
-        System.out.println("莊家選擇射擊你。扣下板機..." + (shell.equals("live") ? "實彈！" : "空包彈"));
+        GamePrinter.printSlow("莊家選擇射擊你。扣下板機..." + (shell.equals("live") ? "實彈！" : "空包彈"));
         if (shell.equals("live")) {
             playerHealth--;
-            System.out.println("莊家射中了你，你的生命值減少1！");
+            GamePrinter.printSlow("莊家射中了你，你的生命值減少1！");
             playerTurn = false;
         } else {
-            System.out.println("你幸運地躲過一劫，輪到你的回合");
+            GamePrinter.printSlow("你幸運地躲過一劫，輪到你的回合");
             playerTurn = true;
             }
         }
@@ -136,17 +143,17 @@ public class FakeBucketshotRoulette {
     //遊戲結束判定
     private void isGameOver() {
         if (playerHealth <= 0) {
-            System.out.println("你已經死亡，遊戲結束！");
+            GamePrinter.printSlow("你已經死亡，遊戲結束！");
             System.exit(0);
         } else if (dealerHealth <= 0) {
-            System.out.println("莊家已經死亡，你贏了！");
+            GamePrinter.printSlow("莊家已經死亡，你贏了！");
             System.exit(0);
         }
     }
     //主遊戲循環迴圈
     public void play(){
         loadShotgun(false); // 初始裝填
-        System.out.println("遊戲開始！玩家先手。");
+        GamePrinter.printSlow("遊戲開始！玩家先手。");
 
         while (true) {
             if (playerTurn) {
