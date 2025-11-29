@@ -14,6 +14,7 @@ public class FakeBucketshotRoulette {
     private Boolean playerTurn; // 玩家回合標誌true: 玩家回合, false: 莊家回合
     private Random random;
     private Scanner scanner;
+    private double dangerLevel = 0.2; // 危險等級，影響實彈比例
     // 建構子
     public FakeBucketshotRoulette(){
         shotgun = new ArrayList<>();
@@ -25,25 +26,31 @@ public class FakeBucketshotRoulette {
     }
     //初始化建構子
     // 加上重新裝填子彈功能
+    //危險等級邏輯一開始0.2每次重新裝填增加0.1上限1.0
     private void loadShotgun(boolean increaseDanger) {
-        shotgun.clear();
-        int totalShells = random.nextInt(7) + 2; // 2-8發子彈
-        int liveShells;
         if (increaseDanger) {
-            // 危險模式：實彈比例增加，例如至少一半是實彈
-            liveShells = totalShells / 2 + random.nextInt(totalShells / 2 + 1);
-        } else {
-            liveShells = random.nextInt(totalShells) + 1; // 至少1發實彈
+            dangerLevel += 0.1;
+            if (dangerLevel > 1.0) dangerLevel = 1.0;
         }
 
-        for (int i = 0; i < liveShells; i++) {
-            shotgun.add("live");
+        shotgun.clear();
+
+        int totalShells = random.nextInt(7) + 2;
+        int maxLive = (int) Math.floor(totalShells * dangerLevel);
+        int liveShells = 1;
+
+        if (maxLive > 1) {
+            liveShells = random.nextInt(maxLive) + 1;
         }
-        for (int i = 0; i < totalShells - liveShells; i++) {
-            shotgun.add("blank");
-        }
+
+        for (int i = 0; i < liveShells; i++) shotgun.add("live");
+        for (int i = 0; i < totalShells - liveShells; i++) shotgun.add("blank");
+
         Collections.shuffle(shotgun);
-        System.out.println("子彈筒已裝填，共有 " + totalShells + " 發子彈，其中 " + liveShells + " 發為實彈。");
+
+        System.out.println("子彈筒已裝填：共 " + totalShells +
+                " 發，其中實彈 " + liveShells +
+                " 發（本次上限比例：" + (int)(dangerLevel * 100) + "%）");
     }
     private void displayStatus() {
         System.out.println("\n-- 目前狀態 --");
