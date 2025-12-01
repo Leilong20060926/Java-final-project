@@ -18,7 +18,8 @@ public class FakeBucketshotRoulette {
     private Boolean playerTurn; // flag for player's turn: true=player, false=dealer
     private Random random;
     private Scanner scanner;
-    private double dangerLevel = 0.2; // danger level; affects proportion of live shells
+    private double dangerLevel = 0.3; // danger level; affects proportion of live shells
+    private double atleastDangerLevel = 0.2; // minimum danger level
 
     // Constructor
     public FakeBucketshotRoulette() {
@@ -37,6 +38,9 @@ public class FakeBucketshotRoulette {
     private void loadShotgun(boolean increaseDanger) {
         if (increaseDanger) {
             dangerLevel += 0.1;
+            atleastDangerLevel += 0.1;
+            if (atleastDangerLevel > 1.0)
+                atleastDangerLevel = 1.0;
             if (dangerLevel > 1.0)
                 dangerLevel = 1.0;
         }
@@ -45,10 +49,11 @@ public class FakeBucketshotRoulette {
 
         int totalShells = random.nextInt(7) + 2;
         int maxLive = (int) Math.floor(totalShells * dangerLevel);
+        int minLive = (int) Math.floor(totalShells * atleastDangerLevel);
         int liveShells = 1;
 
         if (maxLive > 1) {
-            liveShells = random.nextInt(maxLive) + 1;
+            liveShells = random.nextInt(maxLive - minLive + 1) + minLive;
         }
 
         for (int i = 0; i < liveShells; i++)
@@ -104,7 +109,7 @@ public class FakeBucketshotRoulette {
             if (shell.equals("live")) {
                 dealerHealth--;
                 GamePrinter.printSlow("You hit the dealer! Dealer -1 health");
-                playerTurn = true;
+                playerTurn = false;
             } else {
                 GamePrinter.printSlow("Dealer avoided damage, dealer's turn");
                 playerTurn = false;
@@ -135,7 +140,7 @@ public class FakeBucketshotRoulette {
             if (shell.equals("live")) {
                 playerHealth--;
                     GamePrinter.printSlow("Dealer hit you! -1 health");
-                playerTurn = false;
+                playerTurn = true;
             } else {
                     GamePrinter.printSlow("You were lucky, it's your turn");
                 playerTurn = true;
