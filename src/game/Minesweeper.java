@@ -3,17 +3,17 @@ package game;
 import java.util.*;
 
 public class Minesweeper {
-    static int n,m;//n*m map
-    static int mines;//number of mines
-    static int remain=10;//experience points to be collected
-    static int[][] board;//number of mines in eight directions, -1=mine
-    static boolean[][] revealed;//1=opened 0=hasn't been opened
-    static int[] dx={-1,-1,-1,0,0,1,1,1};
-    static int[] dy={-1,0,1,-1,1,-1,0,1};//eight directions
-    static Scanner sc=new Scanner(System.in);
+    private static int n,m;//n*m map
+    private static int mines;//number of mines
+    private static int remain=10;//experience points to be collected
+    private static int[][] board;//number of mines in eight directions, -1=mine
+    private static boolean[][] revealed;//1=opened 0=hasn't been opened
+    private static int[] dx={-1,-1,-1,0,0,1,1,1};
+    private static int[] dy={-1,0,1,-1,1,-1,0,1};//eight directions
+    private static Scanner sc=new Scanner(System.in);
 
     //print board to player
-    static void printBoard(){
+    private static void printBoard(){
         System.out.print("\n   ");
         for(int j=0;j<m;j++) System.out.print(j + " ");//print numbers 0 to m
         System.out.println();
@@ -30,7 +30,7 @@ public class Minesweeper {
     }
 
     //Automatically open board[x][y]=0
-    static void dfs(int x,int y){
+    private static void dfs(int x,int y){
         if(x<0 || x>=n || y<0 || y>=m) return;//out of range
         if(revealed[x][y]) return;//opened
         revealed[x][y]=true;//(x,y) has opened
@@ -39,7 +39,7 @@ public class Minesweeper {
     }
 
     //set level parameters
-    static int setLevel(int level){
+    private static int setLevel(int level){
         int experience=0;
         if(level==1){
             n=4;
@@ -61,7 +61,7 @@ public class Minesweeper {
     }
 
     //game rules
-    static void gameRules(){
+    private static void gameRules(){
         System.out.println("Minesweeper\nGame rules:");
         System.out.println("1. Players start with only one life; stepping on a landmine ends the game.");
         System.out.println("2. Players need to collect 10 experience points, which vary depending on the level difficulty.");
