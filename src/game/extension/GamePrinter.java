@@ -1,7 +1,9 @@
 package game.extension;
 
 public class GamePrinter {
+
     // Set delay between characters (milliseconds)
+    
     private static int textDelay = 35;
 
     public static void setTextDelay(int ms) {
@@ -20,7 +22,9 @@ public class GamePrinter {
         System.out.println();
     }
 
+
     // Print slow text without newline
+
     public static void printSlowRaw(String text) {
         for (char c : text.toCharArray()) {
             System.out.print(c);
