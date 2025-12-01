@@ -8,9 +8,9 @@ public class RpgGame{
         Scanner sc = new Scanner(System.in);
         Random rand = new Random();
 
-        System.out.println("=====================");
+        System.out.println("============================");
         System.out.println("Welcome to the RPG Game !");
-        System.out.println("=====================");
+        System.out.println("============================");
         System.out.print("Enter your character's name: ");
         String playerName = sc.nextLine();
 
