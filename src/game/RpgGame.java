@@ -8,13 +8,29 @@ public class RpgGame{
         Scanner sc = new Scanner(System.in);
         Random rand = new Random(); // Random number generator
 
+        System.out.println("================================================");
+        System.out.println("                RPG GAME RULES                  ");
+        System.out.println("================================================");
+        System.out.println("1. You will enter a battle against a randomly");
+        System.out.println("   generated monster.");
+        System.out.println("2. Each turn, you can choose one of two actions:");
+        System.out.println("     (1) Throw Drug Potion to attack monster.");
+        System.out.println("     (2) Drink Healing Potion to recover your HP.");
+        System.out.println("3. Potions are limited. Once you run out, you");
+        System.out.println("   cannot use them anymore.");
+        System.out.println("4. After your action, the monster will counterattack");
+        System.out.println("   if it is still alive.");
+        System.out.println("5. The battle ends when either you or the monster");
+        System.out.println("   reaches 0 HP.");
+        System.out.println("================================================\n");
+
         System.out.println("============================");
         System.out.println("Welcome to the RPG Game !");
         System.out.println("============================");
         System.out.print("Enter your character's name: ");
         String playerName = sc.nextLine();
 
-        role player = new role(playerName, 31, 17, 10);  // Create player character
+        role player = new role(playerName, 31, 18, 10);  // Create player character
         System.out.println("Character Created: " + player.getName() + 
                             " | HP: " + player.getHP() + " | ATK: " + player.getATK() +
                              " | DEF: " + player.getDEF());
@@ -65,7 +81,7 @@ public class RpgGame{
                         continue; // skip the turn
                     }
                     healingPotion = healingPotion - 1; // Use one healing potion
-                    int healAmount = rand.nextInt(3) + 4; // Heal between 4 to 6 HP
+                    int healAmount = rand.nextInt(4) + 6; //recover 6 - 9
                     player.setHP(player.getHP() + healAmount);
                     System.out.println(playerName + " drinks healing potion and recovers " +
                             healAmount + " HP.");
@@ -82,7 +98,7 @@ public class RpgGame{
 
             // Monster's turn to attack if it's still alive
             if(monster.getHP() > 0){
-                int monsterDamage = Math.max(1, monster.getATK() - player.getDEF() + rand.nextInt(7)); 
+                int monsterDamage = Math.max(1, monster.getATK() - player.getDEF() + rand.nextInt(6)); 
                 player.setHP(player.getHP() - monsterDamage);
                 System.out.println(monsterName + " attacks " + playerName + 
                                     " causing " + monsterDamage + " damage.");
