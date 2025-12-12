@@ -1,5 +1,5 @@
 
-import game.CloverPitAdvanced;
+import game.CloverPit;
 import game.FakeBucketshotRoulette;
 import game.Minesweeper;
 import game.RpgGame;
@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) {
         Ending ending = new Ending();
         int achievement1=0,achievement2=0,achievement3=0,achievement4=0;
+        int achievementall=0;
 
         while(true){
             int game1=0,game2=0,game3=0,game4=0;
@@ -19,7 +20,7 @@ public class Main {
             Opening opening = new Opening();
             opening.startOpening();
 
-            /*while(game1==0){
+            while(game1==0){
                 opening.bucketshotOpening();
                 delay();
                 FakeBucketshotRoulette fakebucketshotroulette=new FakeBucketshotRoulette();
@@ -56,7 +57,7 @@ public class Main {
                     achievement2=1;
                     opening.minesweeperAchievement();
                 }
-            }*/
+            }
 
             opening.escapeOpening();
             Scanner sc = new Scanner(System.in);
@@ -111,9 +112,39 @@ public class Main {
             while(game4==0){
                 opening.cloverPitOpening();
                 delay();
-                CloverPitAdvanced cloverpit=new CloverPitAdvanced();
+                CloverPit cloverpit=new CloverPit();
+                int result[]=cloverpit.play();
+                game4=result[0];
+                gameperfect4=result[1];
+                if(game4==0){
+                    ending.badEnding();
+                    continueGame(0);
+                } else if(gameperfect4==1) {
+                    opening.cloverPitPerfectClear();
+                } else {
+                    opening.cloverPitNormalClear();
+                }
+                if(achievement4==0 && result[2]==1){
+                    achievement4=1;
+                    opening.cloverPitAchievement();
+                }
+            }
 
-                
+            if(achievementall==0 && achievement1==1 && achievement2==1 && achievement3==1 && achievement4==1){
+                achievementall=1;
+                ending.achievementEnding();
+                continueGame(1);
+            }
+
+            if(gameperfect2==0 && gameperfect4==0){
+                ending.neutralEnding();
+                continueGame(1);
+            } else if(gameperfect2==1 && gameperfect4==1){
+                ending.dealerEnding();
+                continueGame(1);
+            } else {
+                ending.trueEnding();
+                continueGame(1);
             }
         }
     }
@@ -143,7 +174,7 @@ public class Main {
             choice = sc.nextInt();
         }
         if (choice == 0) {
-            System.out.println("Exiting the game. Goodbye!");
+            System.out.println("Exiting the game. Thanks for playing! Goodbye!");
             System.exit(0);
         }
     }

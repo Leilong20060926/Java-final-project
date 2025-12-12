@@ -124,8 +124,6 @@ public class RpgGame{
             clear3++;
         }
 
-        System.out.println("\n===== GAME OVER =====");
-
         return new int[]{clear3, achievement3};
 
     }

@@ -20,14 +20,19 @@ import java.util.*;
  *
  * 可擴充：更多道具、事件、商店、GUI
  */
-public class CloverPitAdvanced {
+public class CloverPit {
     public static void main(String[] args) {
-        CloverPit game = new CloverPit();
-        game.play();
+        Game game = new Game();
+        game.start();
+    }
+
+    public int[] play() {
+        Game game = new Game();
+        return game.start();
     }
 
     /* ---------------- Game ---------------- */
-    static class CloverPit {
+    static class Game {
         final Scanner scanner = new Scanner(System.in);
         final Random rng = new Random();
 
@@ -44,7 +49,7 @@ public class CloverPitAdvanced {
         public int perfect4 = 0;
         public int achievement4 = 0;
 
-        public int[] play() {
+        public int[] start() {
             welcome();
             player = new Player(60); // 初始金錢
             // 預設道具（示範）
