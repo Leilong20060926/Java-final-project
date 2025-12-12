@@ -1,12 +1,12 @@
 package game;
 
-import java.util.Scanner;
 import game.extension.GamePrinter;
 import game.extension.Item;
-import java.util.Random;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class FakeBucketshotRoulette {
     // Initial health
@@ -26,6 +26,10 @@ public class FakeBucketshotRoulette {
     private int currentDamage = 1; // Default damage (Saw changes this to 2)
     private boolean dealerHandcuffed = false; // Is the dealer skipped?
 
+    // Judgement variables
+    public int clear = 0;
+    public int achievement = 0;
+    
     // Constructor
     public FakeBucketshotRoulette() {
         shotgun = new ArrayList<>();
@@ -286,19 +290,8 @@ public class FakeBucketshotRoulette {
         }
     }
 
-    // Game over check
-    private void isGameOver() {
-        if (playerHealth <= 0) {
-            GamePrinter.printSlow("You have died. Game over!");
-            System.exit(0);
-        } else if (dealerHealth <= 0) {
-            GamePrinter.printSlow("Dealer has died. You win!");
-            System.exit(0);
-        }
-    }
-
     // Main game loop
-    public void play() {
+    public int play() {
         loadShotgun(false); // initial load
         GamePrinter.printSlow("Game start! Player goes first.");
 
@@ -308,12 +301,21 @@ public class FakeBucketshotRoulette {
             } else {
                 dealerAction();
             }
-            isGameOver();
+
+            if (playerHealth <= 0) {
+                GamePrinter.printSlow("You have died. Game over!");
+                return clear;
+            } else if (dealerHealth <= 0) {
+                GamePrinter.printSlow("Dealer has died. You win!");
+                clear++;
+                return clear;
+            }
         }
+
     }
 
     public static void main(String[] args) {
         FakeBucketshotRoulette game = new FakeBucketshotRoulette();
-        game.play(); // start game
+        game.play();
     }
 }
