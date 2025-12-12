@@ -1,4 +1,3 @@
-
 import game.CloverPit;
 import game.FakeBucketshotRoulette;
 import game.Minesweeper;
@@ -21,7 +20,7 @@ public class Main {
             Opening opening = new Opening();
             opening.startOpening();
 
-            /*while(game1==0){
+            while(game1==0){
                 opening.bucketshotOpening();
                 delay();
                 FakeBucketshotRoulette fakebucketshotroulette=new FakeBucketshotRoulette();
@@ -37,7 +36,7 @@ public class Main {
                     achievement1=1;
                     opening.bucketshotAchievement();
                 }
-            }*/
+            }
 
             while(game2==0){
                 opening.minesweeperOpening();
@@ -151,7 +150,7 @@ public class Main {
 
     public static void delay() {
         try {
-            Thread.sleep(5000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
