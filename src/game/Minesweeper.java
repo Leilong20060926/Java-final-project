@@ -76,6 +76,10 @@ public class Minesweeper {
     }
 
     public int[] play() {
+        // Reset state variables for new game
+        remain=10;
+        gameover=0;
+        
         gameRules();//introduce game rules
         long startTime=System.currentTimeMillis();//timer
 

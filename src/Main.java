@@ -8,6 +8,7 @@ import story.Ending;
 import story.Opening;
 
 public class Main {
+    private static final Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
         Ending ending = new Ending();
         int achievement1=0,achievement2=0,achievement3=0,achievement4=0;
@@ -20,7 +21,7 @@ public class Main {
             Opening opening = new Opening();
             opening.startOpening();
 
-            while(game1==0){
+            /*while(game1==0){
                 opening.bucketshotOpening();
                 delay();
                 FakeBucketshotRoulette fakebucketshotroulette=new FakeBucketshotRoulette();
@@ -36,7 +37,7 @@ public class Main {
                     achievement1=1;
                     opening.bucketshotAchievement();
                 }
-            }
+            }*/
 
             while(game2==0){
                 opening.minesweeperOpening();
@@ -60,7 +61,6 @@ public class Main {
             }
 
             opening.escapeOpening();
-            Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
             while (choice != 1 && choice != 2) {
                 System.out.println("Invalid input. Please enter 1 or 2.");
@@ -163,7 +163,6 @@ public class Main {
         } else {
             System.out.println("Restart? (1: Yes / 0: No)");
         }
-        Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
         while (choice != 0 && choice != 1) {
             if(re==0){
