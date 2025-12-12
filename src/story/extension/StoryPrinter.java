@@ -18,7 +18,14 @@ public class StoryPrinter {
     public static void printSlowWithSkip(String text) {
         // Start a thread to detect Enter key press
         Thread skipThread = new Thread(() -> {
-            if(scanner.hasNextLine()) scanner.nextLine();  // Wait for Enter key press
+            while (!scanner.hasNextLine()) {
+                try {
+                    Thread.sleep(10); // Check for Enter key at intervals
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+            scanner.nextLine();  // Wait for Enter key press
         });
 
         // Start the thread

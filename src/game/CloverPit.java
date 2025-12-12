@@ -23,7 +23,7 @@ import java.util.*;
 public class CloverPit {
     public static void main(String[] args) {
         Game game = new Game();
-        game.start();
+        game.play();
     }
 
     /* ---------------- Game ---------------- */
@@ -39,7 +39,12 @@ public class CloverPit {
         int spinCost = 5;          // 每次拉霸消耗金錢
         Symbol[] symbols = Symbol.values();
 
-        void start() {
+        // Judgement variables
+        public int clear4 = 0;
+        public int perfect4 = 0;
+        public int achievement4 = 0;
+
+        public int[] play() {
             welcome();
             player = new Player(60); // 初始金錢
             // 預設道具（示範）
@@ -50,6 +55,8 @@ public class CloverPit {
             player.addItem(new DebtReducer());     // 主動降低本回合債務
 
             loop();
+
+            return new int[]{player.isAlive() ? 1 : 0, perfect4, achievement4};
         }
 
         void welcome() {
