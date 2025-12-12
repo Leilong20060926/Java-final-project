@@ -5,20 +5,20 @@ import java.util.*;
 /**
  * CloverPitAdvanced
  *
- * 進階版 CloverPit-like console prototype
+ * Advanced version of CloverPit-like console prototype
  *
- * - 回合制 (maxRounds 可調)
- * - 每回合有 debt (債務) 要求，若玩家結算時 money < debt 則死亡（除非保險）
- * - Slot machine (三軸) 符號: CHERRY, BAR, SEVEN
- * - Item 介面：被動/主動、消耗/非消耗皆可
- * - 範例 Items: LuckyCharm (提升 next spin 的 SEVEN 機率),
- *                 Insurance (被動保命一次),
- *                 CoinMultiplier (疊加獎金),
- *                 ReSpin (主動：重新拉一次),
- *                 DebtReducer (主動：降低本回合 debt)
- * - 行動次數限制 (actionsPerRound)
+ * - Turn-based (maxRounds adjustable)
+ * - Each round has a debt requirement. If the player's money < debt at settlement, they die (unless they have insurance)
+ * - Slot machine (three reels) symbols: CHERRY, BAR, SEVEN
+ * - Item interface: passive/active, consumable/non-consumable
+ * - Example Items: LuckyCharm (increases SEVEN chances for next spin),
+ *                 Insurance (passive, saves the player once),
+ *                 CoinMultiplier (stackable bonus),
+ *                 ReSpin (active: re-spin immediately),
+ *                 DebtReducer (active: reduce this round's debt)
+ * - Action limits (actionsPerRound)
  *
- * 可擴充：更多道具、事件、商店、GUI
+ * Expandable: more items, events, stores, GUI
  */
 public class CloverPit {
     public static void main(String[] args) {
@@ -39,9 +39,9 @@ public class CloverPit {
         Player player;
         int maxRounds = 5;
         int currentRound = 1;
-        int baseDebt = 30;         // 第1回合債務
-        int actionsPerRound = 3;   // 每回合最多行動次數（避免一直 spin）
-        int spinCost = 5;          // 每次拉霸消耗金錢
+        int baseDebt = 30;         // Debt in the 1st round
+        int actionsPerRound = 3;   // Maximum actions per round (to prevent infinite spins)
+        int spinCost = 5;          // Cost per spin
         Symbol[] symbols = Symbol.values();
 
         // Judgement variables
@@ -51,13 +51,13 @@ public class CloverPit {
 
         public int[] start() {
             welcome();
-            player = new Player(60); // 初始金錢
-            // 預設道具（示範）
-            player.addItem(new LuckyCharm());      // 提升下一次 spin 中 SEVEN 機率（消耗）
-            player.addItem(new Insurance());       // 保險（被動，遇不到債務時保命一次）
-            player.addItem(new CoinMultiplier());  // 堆疊型，增加 payout
-            player.addItem(new ReSpin());          // 立刻重轉一次的道具
-            player.addItem(new DebtReducer());     // 主動降低本回合債務
+            player = new Player(60); // Starting money
+            // Default items (demo purposes)
+            player.addItem(new LuckyCharm());      // Increases SEVEN chances in next spin (consumable)
+            player.addItem(new Insurance());       // Insurance (passive, saves once if debt isn't met)
+            player.addItem(new CoinMultiplier());  // Stackable, increases payout
+            player.addItem(new ReSpin());          // Re-spin item
+            player.addItem(new DebtReducer());     // Active, reduces this round's debt
 
             loop();
 
@@ -66,46 +66,46 @@ public class CloverPit {
 
         void welcome() {
             System.out.println("=== CloverPit Advanced (Console) ===");
-            System.out.println("玩法重點：每回合你必須掙到足夠金錢還債 (debt)。");
-            System.out.println("你有道具可以改變拉霸機率、提升獎金或保命。祝你好運。\n");
+            System.out.println("Game Objective: Each round, you must earn enough money to pay off your debt.");
+            System.out.println("You have items that can modify slot machine probabilities, increase payouts, or save your life. Good luck.\n");
         }
 
         void loop() {
             while (currentRound <= maxRounds) {
-                System.out.println("\n--- 回合 " + currentRound + " ---");
+                System.out.println("\n--- Round " + currentRound + " ---");
                 int debt = computeDebt(currentRound);
-                System.out.println("本回合債務 (required): " + debt);
+                System.out.println("This round's debt (required): " + debt);
                 int actionsLeft = actionsPerRound;
                 boolean roundOver = false;
 
-                // 本回合臨時可用修正（例如被 DebtReducer 改過）
+                // Temporary debt adjustment for the round (e.g., modified by DebtReducer)
                 int tempDebtReduction = 0;
 
                 while (!roundOver && player.isAlive()) {
-                    System.out.println("\n金錢: " + player.money + " | hp: " + player.hp + " | 行動剩餘: " + actionsLeft);
-                    System.out.println("道具: " + player.itemSummary());
+                    System.out.println("\nMoney: " + player.money + " | hp: " + player.hp + " | Actions left: " + actionsLeft);
+                    System.out.println("Items: " + player.itemSummary());
                     System.out.println("1) Spin (cost " + spinCost + ")  2) Use Item  3) Inspect Status  4) End Round");
-                    System.out.print("選擇 (1-4): ");
+                    System.out.print("Choose (1-4): ");
                     String input = scanner.nextLine().trim();
 
                     switch (input) {
                         case "1":
                             if (actionsLeft <= 0) {
-                                System.out.println("行動次數已用完。");
+                                System.out.println("No actions left.");
                                 break;
                             }
                             if (player.money < spinCost) {
-                                System.out.println("金錢不足，無法拉霸。");
+                                System.out.println("Not enough money to spin.");
                                 break;
                             }
                             player.money -= spinCost;
                             SpinResult result = spinOnce(player);
                             int payout = computePayout(result);
                             payout = player.applyPayoutModifiers(payout);
-                            System.out.println("拉霸結果: " + result + " -> 獲得 " + payout + " 元");
+                            System.out.println("Spin result: " + result + " -> You win " + payout + " coins");
                             player.money += payout;
                             actionsLeft--;
-                            // 如果有使用 LuckyCharm 的標記，使用後清除（設計在 LuckyCharm 自身）
+                            // If LuckyCharm was used, clear its flag (design handled in LuckyCharm itself)
                             player.consumeNextSpinFlagsIfAny();
                             break;
                         case "2":
@@ -118,30 +118,30 @@ public class CloverPit {
                             roundOver = true;
                             break;
                         default:
-                            System.out.println("請輸入 1-4。");
+                            System.out.println("Please input 1-4.");
                     }
 
-                    // 早期結束條件：若已達成債務
+                    // Early exit condition: if debt is covered
                     if (player.money >= (debt - tempDebtReduction)) {
-                        System.out.println("\n已達到本回合債務要求 (扣除臨時折抵)!");
+                        System.out.println("\nYou have met the debt requirement (after temporary reductions)!");
                         roundOver = true;
                     }
-                } // 回合內
+                } // End of round
 
-                // 回合結算
+                // Round settlement
                 if (player.money < computeDebt(currentRound)) {
-                    // 若有 Insurance，且尚未在本回合已使用
+                    // If insurance is available and not used in this round
                     if (player.hasUsableInsurance()) {
-                        System.out.println("\n你未達成債務，但保險自動啟動，避免死亡一次。保險被消耗。");
+                        System.out.println("\nYou haven't met the debt, but insurance activates to save you. Insurance is consumed.");
                         player.consumeInsurance();
-                        // 將金錢拉到債務線 (象徵貸款)
+                        // Bring the money to the debt level (symbolic of taking a loan)
                         player.money = computeDebt(currentRound);
                     } else {
-                        System.out.println("\n你未能還清債務，陷阱打開，你掉進深淵。");
+                        System.out.println("\nYou failed to meet the debt. A trap opens, and you fall into the abyss.");
                         player.hp = 0;
                     }
                 } else {
-                    System.out.println("回合 " + currentRound + " 成功還債！");
+                    System.out.println("Round " + currentRound + " debt cleared!");
                 }
 
                 if (!player.isAlive()) {
@@ -149,47 +149,47 @@ public class CloverPit {
                     break;
                 }
 
-                // 每回合結束時，可能觸發簡單事件（示範）
+                // Potential events at the end of the round (demo)
                 maybeTriggerEvent();
 
                 currentRound++;
             } // rounds
 
             if (player.isAlive()) {
-                System.out.println("\n=== 恭喜，你存活到關卡結束！ ===");
-                System.out.println("最終金錢: " + player.money + " | hp: " + player.hp);
+                System.out.println("\n=== Congratulations, you survived to the end of the game! ===");
+                System.out.println("Final money: " + player.money + " | hp: " + player.hp);
             }
-            System.out.println("\n感謝遊玩 CloverPit Advanced.");
+            System.out.println("\nThank you for playing CloverPit Advanced.");
         }
 
         int computeDebt(int round) {
-            // 稍微更有彈性的債務升幅（可微調）
-            return baseDebt + (round - 1) * 25; // 30,55,80,105,130 (示例)
+            // Flexible debt increase (adjustable)
+            return baseDebt + (round - 1) * 25; // 30,55,80,105,130 (example)
         }
 
-        /* ---------- spin/slot 機制 ---------- */
+        /* ---------- spin/slot mechanics ---------- */
 
-        // spin 會考慮玩家的 nextSpinFlags (例如 LuckyCharm)
+        // Spin takes into account the player's nextSpinFlags (e.g., LuckyCharm)
         SpinResult spinOnce(Player player) {
-            // 基本權重（higher means more likely）
+            // Basic weights (higher means more likely)
             // base: CHERRY 60, BAR 30, SEVEN 10
             int wCherry = 60, wBar = 30, wSeven = 10;
 
-            // 檢查玩家是否有 nextSpin 增益 (LuckyCharm) 或其他 effect
+            // Check if the player has nextSpin boosts (LuckyCharm) or other effects
             if (player.nextSpinHasLuckyCharm) {
-                // 如果 LuckyCharm 啟動，明顯提高 SEVEN 機率
+                // If LuckyCharm is active, significantly increase SEVEN chances
                 wSeven = 50; wCherry = 30; wBar = 20;
-                System.out.println("[LuckyCharm] 下一次拉霸 SEVEN 機率大幅提升！");
+                System.out.println("[LuckyCharm] SEVEN chances greatly increased for the next spin!");
             }
 
-            // 若玩家有被動道具可調整權重（hook）
+            // If the player has passive items that adjust the weights (hook)
             WeightModifier wm = player.getPassiveWeightModifier();
             if (wm != null) {
                 int[] arr = wm.modifyWeights(wCherry, wBar, wSeven);
                 wCherry = arr[0]; wBar = arr[1]; wSeven = arr[2];
             }
 
-            // 依權重產生每軸結果
+            // Generate results for each reel based on weights
             Symbol a = weightedRandomSymbol(wCherry, wBar, wSeven);
             Symbol b = weightedRandomSymbol(wCherry, wBar, wSeven);
             Symbol c = weightedRandomSymbol(wCherry, wBar, wSeven);
@@ -206,66 +206,66 @@ public class CloverPit {
         }
 
         int computePayout(SpinResult r) {
-            // 基礎 payout 規則（可調）
+            // Basic payout rules (adjustable)
             if (r.a == Symbol.SEVEN && r.b == Symbol.SEVEN && r.c == Symbol.SEVEN) {
-                System.out.println("三個 7！大中獎！");
+                System.out.println("Three SEVENS! Big win!");
                 return 150;
             } else if (r.a == Symbol.BAR && r.b == Symbol.BAR && r.c == Symbol.BAR) {
-                System.out.println("三個 BAR！中獎！");
+                System.out.println("Three BARs! Win!");
                 return 80;
             } else if (r.a == Symbol.CHERRY && r.b == Symbol.CHERRY && r.c == Symbol.CHERRY) {
-                System.out.println("三個 CHERRY！小中獎！");
+                System.out.println("Three CHERRIES! Small win!");
                 return 40;
             } else if (r.a == r.b || r.b == r.c || r.a == r.c) {
-                System.out.println("兩個相同符號！小獎");
+                System.out.println("Two matching symbols! Small win");
                 return 15;
             } else {
-                System.out.println("什麼也沒中……");
+                System.out.println("No win...");
                 return 0;
             }
         }
 
-        /* ---------- item 使用 ---------- */
+        /* ---------- Item usage ---------- */
 
         void useItemMenu() {
             if (player.items.isEmpty()) {
-                System.out.println("無可用道具。");
+                System.out.println("No usable items.");
                 return;
             }
-            System.out.println("\n可用道具：");
+            System.out.println("\nAvailable items:");
             for (int i = 0; i < player.items.size(); i++) {
                 Item it = player.items.get(i);
                 System.out.printf("%d) %s - %s\n", i + 1, it.name(), it.description());
             }
-            System.out.println("輸入道具編號使用，或輸入 0 返回：");
+            System.out.println("Enter item number to use, or 0 to return:");
             String s = scanner.nextLine().trim();
             int pick;
             try { pick = Integer.parseInt(s); }
-            catch (NumberFormatException e) { System.out.println("輸入錯誤。"); return; }
+            catch (NumberFormatException e) { System.out.println("Invalid input."); return; }
             if (pick == 0) return;
-            if (pick < 1 || pick > player.items.size()) { System.out.println("編號錯誤。"); return; }
+            if (pick < 1 || pick > player.items.size()) { System.out.println("Invalid number."); return; }
             Item chosen = player.items.get(pick - 1);
             boolean used = chosen.use(player);
             if (used && chosen.consumable()) {
                 player.items.remove(chosen);
-                System.out.println(chosen.name() + " 已消耗並從庫存移除。");
+                System.out.println(chosen.name() + " consumed and removed from inventory.");
             } else if (used) {
-                System.out.println(chosen.name() + " 已觸發 (非消耗型)。");
+                System.out.println(chosen.name() + " activated (non-consumable).");
             } else {
-                System.out.println(chosen.name() + " 無效果或無法使用。");
+                System.out.println(chosen.name() + " has no effect or cannot be used.");
             }
         }
 
-        /* ---------- Events (示例) ---------- */
+        /* ---------- Events (example) ---------- */
 
         void maybeTriggerEvent() {
-            // 簡單隨機事件：小機率獲得 10 元、或被扣 10 元（示範）
+            // Simple random event: small chance to gain 10 coins, or lose 10 coins (demo)
             int roll = rng.nextInt(100);
             if (roll < 10) {
-                System.out.println("[事件] 你找到了一枚古幣，獲得 10 元！");
+                System.out.println("[Event] You found an ancient coin, gaining 10 coins!");
                 player.money += 10;
             } else if (roll >= 95) {
-                System.out.println("[事件] 你遭遇不幸，被偷走 10 元...");
+                System.out.println("[Event] You encountered bad luck, losing 10 coins...");
                 player.money = Math.max(0, player.money - 10);
             }
         }
@@ -291,26 +291,26 @@ public class CloverPit {
         void addItem(Item it) { items.add(it); }
 
         String itemSummary() {
-            if (items.isEmpty()) return "無";
+            if (items.isEmpty()) return "None";
             StringBuilder sb = new StringBuilder();
             for (Item i : items) sb.append(i.name()).append(", ");
             return sb.substring(0, sb.length() - 2);
         }
 
-        // payout multiplier 使用 coinMultiplierStacks
+        // payout multiplier using coinMultiplierStacks
         int applyPayoutModifiers(int payout) {
             int res = payout;
             if (coinMultiplierStacks > 0 && res > 0) {
-                // 每層 +40% 獎金（可調整）
+                // Each stack adds 40% payout (adjustable)
                 for (int i = 0; i < coinMultiplierStacks; i++) {
                     res += res * 40 / 100;
                 }
-                System.out.println("[CoinMultiplier] 獎金被提升至: " + res);
+                System.out.println("[CoinMultiplier] Payout increased to: " + res);
             }
             return res;
         }
 
-        // 被動權重修正 hook（某些道具可能回傳 modifier）
+        // Passive weight modification hook (some items may return modifiers)
         WeightModifier getPassiveWeightModifier() {
             for (Item it : items) {
                 if (it instanceof WeightModifierProvider) {
@@ -322,7 +322,7 @@ public class CloverPit {
             return null;
         }
 
-        // Insurance 檢查與消耗
+        // Insurance check and consume
         boolean hasUsableInsurance() {
             for (Item it : items) if (it instanceof Insurance) return true;
             return false;
@@ -333,49 +333,49 @@ public class CloverPit {
                 Item i = it.next();
                 if (i instanceof Insurance) {
                     it.remove();
-                    System.out.println("[Insurance] 保險被消耗。");
+                    System.out.println("[Insurance] Insurance consumed.");
                     return;
                 }
             }
         }
 
-        // nextSpin flag consumption：用於 LuckyCharm 等
+        // nextSpin flag consumption: for LuckyCharm and others
         void consumeNextSpinFlagsIfAny() {
             if (nextSpinHasLuckyCharm) {
-                nextSpinHasLuckyCharm = false; // 清除 lucky 標記（LuckyCharm 被消耗時會自己處理）
+                nextSpinHasLuckyCharm = false; // Clear LuckyCharm flag (handled by LuckyCharm itself)
             }
         }
 
         void debugStatus() {
-            System.out.println("\n-- 玩家狀態 --");
+            System.out.println("\n-- Player Status --");
             System.out.println("hp: " + hp);
             System.out.println("money: " + money);
             System.out.println("CoinMultiplier stacks: " + coinMultiplierStacks);
             System.out.println("NextSpinLucky: " + nextSpinHasLuckyCharm);
-            System.out.println("道具: " + itemSummary());
+            System.out.println("Items: " + itemSummary());
             System.out.println("----------------\n");
         }
     }
 
-    /* ---------- Item 介面與實作 ---------- */
+    /* ---------- Item Interface & Implementation ---------- */
     interface Item {
         String name();
         String description();
         /**
-         * 使用道具（主動觸發）
-         * @param player 傳入玩家以修改狀態
-         * @return true 若道具觸發/生效（若為消耗型，Game 會移除該道具）
+         * Use item (trigger active effects)
+         * @param player Pass player to modify their state
+         * @return true if item triggered/was effective (if consumable, Game will remove item)
          */
         boolean use(Player player);
-        default boolean consumable() { return true; } // 預設為消耗型
+        default boolean consumable() { return true; } // Default to consumable
     }
 
-    // 有些道具會提供被動權重修改
+    // Some items provide passive weight modifications
     interface WeightModifierProvider {
         WeightModifier getWeightModifier();
     }
 
-    // 權重 modifier 物件（可回傳調整後的權重）
+    // Weight modifier object (returns adjusted weights)
     static class WeightModifier {
         // modify weights: input (wCherry, wBar, wSeven) -> return adjusted {wCherry, wBar, wSeven}
         int[] modifyWeights(int wCherry, int wBar, int wSeven) {
@@ -383,71 +383,66 @@ public class CloverPit {
         }
     }
 
-    /* ---------- 範例道具：LuckyCharm（影響下一次 spin 的 SEVEN 機率） ---------- */
+    /* ---------- Example Items: LuckyCharm (Increases SEVEN chances for next spin) ---------- */
     static class LuckyCharm implements Item {
         boolean consumed = false;
         @Override public String name() { return "LuckyCharm"; }
-        @Override public String description() { return "消耗型：下一次拉霸 SEVEN 機率大幅提升。"; }
+        @Override public String description() { return "Consumable: Increases SEVEN chances for next spin."; }
         @Override
         public boolean use(Player player) {
             if (consumed) return false;
             consumed = true;
             player.nextSpinHasLuckyCharm = true;
-            System.out.println("[使用 LuckyCharm] 下一次拉霸 SEVEN 機率將大幅提升。");
+            System.out.println("[Used LuckyCharm] Next spin has increased SEVEN chances.");
             return true;
         }
     }
 
-    /* ---------- Insurance（被動保命一次） ---------- */
+    /* ---------- Insurance (Passive, Saves Once) ---------- */
     static class Insurance implements Item {
         @Override public String name() { return "Insurance"; }
-        @Override public String description() { return "被動保險：若回合結算未達債務，會自動消耗保險避免死亡。"; }
+        @Override public String description() { return "Passive: Saves you once when debt isn't met."; }
         @Override public boolean use(Player player) {
-            System.out.println("Insurance 為被動道具，無法主動使用（在回合結算時自動觸發）。");
+            System.out.println("Insurance is a passive item, cannot be used directly (activates automatically during settlement).");
             return false;
         }
-        @Override public boolean consumable() { return true; } // 在觸發時會被消耗
+        @Override public boolean consumable() { return true; } // Consumed when triggered
     }
 
-    /* ---------- CoinMultiplier（疊加型獎金乘數） ---------- */
+    /* ---------- CoinMultiplier (Stackable Bonus Multiplier) ---------- */
     static class CoinMultiplier implements Item {
         @Override public String name() { return "CoinMultiplier"; }
-        @Override public String description() { return "主動：增加 1 層獎金乘數（每層+40% 獎金）。消耗型。"; }
+        @Override public String description() { return "Active: Adds 1 stack to the payout multiplier (+40% per stack)."; }
         @Override public boolean use(Player player) {
             player.coinMultiplierStacks++;
-            System.out.println("[CoinMultiplier] 增加一層乘數，目前層數：" + player.coinMultiplierStacks);
+            System.out.println("[CoinMultiplier] One stack added. Current multiplier: " + player.coinMultiplierStacks);
             return true;
         }
     }
 
-    /* ---------- ReSpin（主動重轉一次） ---------- */
+    /* ---------- ReSpin (Active: Re-spin Once) ---------- */
     static class ReSpin implements Item {
         @Override public String name() { return "ReSpin"; }
-        @Override public String description() { return "主動：立刻執行一次免費 re-spin（非消耗時可改為無限）"; }
+        @Override public String description() { return "Active: Immediately performs a re-spin (non-consumable when infinite)."; }
         @Override public boolean use(Player player) {
-            // 由於本 prototype 的 spin 必須在 Game.spinOnce 執行，
-            // 這裡只作為標記型道具，實際使用方式為：玩家按 use 之後 Game 可檢查並立刻呼叫 spinOnce，再移除此道具。
-            System.out.println("[ReSpin] 系統會在下一次拉霸機會內執行一個免費重轉（實現簡化：直接給玩家 10 元代表重轉小獎）。");
-            // 為避免耦合過深，這個 item 在 use 時給予玩家小額補償（示範）
-            player.money += 10;
+            System.out.println("[ReSpin] Performing a free re-spin for you.");
+            player.money += 10; // Representing a small win from re-spin
             return true;
         }
     }
 
-    /* ---------- DebtReducer（降低本回合 debt） ---------- */
+    /* ---------- DebtReducer (Active: Reduce Debt for the Round) ---------- */
     static class DebtReducer implements Item {
         @Override public String name() { return "DebtReducer"; }
-        @Override public String description() { return "主動：當回合使用可降低本回合債務 20 元（一次性）。"; }
+        @Override public String description() { return "Active: Reduces this round's debt by 20 coins (one-time)."; }
         @Override public boolean use(Player player) {
-            // 我們在 prototype 中無法直接改 Game 的 debt 計算（耦合），
-            // 因此採取使玩家直接獲得等價金額（讓需求看似降低）
-            System.out.println("[DebtReducer] 你立即獲得 20 元（等效於降低本回合債務）。");
+            System.out.println("[DebtReducer] You immediately gain 20 coins (effectively reducing your debt).");
             player.money += 20;
             return true;
         }
     }
 
-    /* ---------- Symbol、SpinResult ---------- */
+    /* ---------- Symbol, SpinResult ---------- */
     enum Symbol { CHERRY, BAR, SEVEN }
 
     static class SpinResult {
