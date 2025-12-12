@@ -20,14 +20,14 @@ import java.util.*;
  *
  * 可擴充：更多道具、事件、商店、GUI
  */
-public class CloverPit {
+public class CloverPitAdvanced {
     public static void main(String[] args) {
-        Game game = new Game();
+        CloverPit game = new CloverPit();
         game.play();
     }
 
     /* ---------------- Game ---------------- */
-    static class Game {
+    static class CloverPit {
         final Scanner scanner = new Scanner(System.in);
         final Random rng = new Random();
 

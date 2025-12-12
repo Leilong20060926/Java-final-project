@@ -1,4 +1,5 @@
 import game.CloverPit;
+import game.CloverPitAdvanced;
 import game.FakeBucketshotRoulette;
 import game.Minesweeper;
 import game.RpgGame;
@@ -34,7 +35,7 @@ public class Main {
                     achievement1=1;
                     opening.bucketshotAchievement();
                 }
-            }*/
+            }
 
             while(game2==0){
                 opening.minesweeperOpening();
@@ -55,7 +56,7 @@ public class Main {
                     achievement2=1;
                     opening.minesweeperAchievement();
                 }
-            }
+            }*/
 
             opening.escapeOpening();
             Scanner scanner = new Scanner(System.in);
@@ -110,7 +111,8 @@ public class Main {
             while(game4==0){
                 opening.cloverPitOpening();
                 delay();
-                CloverPit cloverpit=new CloverPit();
+                CloverPitAdvanced cloverpit=new CloverPitAdvanced();
+
                 
             }
         }
