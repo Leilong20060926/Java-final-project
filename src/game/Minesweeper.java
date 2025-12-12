@@ -1,5 +1,5 @@
 package game;
-
+import game.extension.GamePrinter;
 import java.util.*;
 public class Minesweeper {
     // Judgement variables
@@ -67,12 +67,12 @@ public class Minesweeper {
 
     //game rules
     private static void gameRules(){
-        System.out.println("Minesweeper\nGame rules:");
-        System.out.println("1. Players start with only one life; stepping on a landmine ends the game.");
-        System.out.println("2. Players need to collect 10 experience points, which vary depending on the level difficulty.");
-        System.out.println("   (1) Level 1: 4x4 map with 4 mines; completing a level grants 4 experience points.");
-        System.out.println("   (2) Level 2: 6x6 map with 6 mines; completing a level grants 6 experience points.");
-        System.out.println("   (3) Level 3: 10x10 map with 10 mines; completing a level grants 10 experience points.");
+        GamePrinter.printSlow("Minesweeper\nGame rules:");
+        GamePrinter.printSlow("1. Players start with only one life; stepping on a landmine ends the game.");
+        GamePrinter.printSlow("2. Players need to collect 10 experience points, which vary depending on the level difficulty.");
+        GamePrinter.printSlow("   (1) Level 1: 4x4 map with 4 mines; completing a level grants 4 experience points.");
+        GamePrinter.printSlow("   (2) Level 2: 6x6 map with 6 mines; completing a level grants 6 experience points.");
+        GamePrinter.printSlow("   (3) Level 3: 10x10 map with 10 mines; completing a level grants 10 experience points.");
     }
 
     public int[] play() {
