@@ -27,8 +27,8 @@ public class FakeBucketshotRoulette {
     private boolean dealerHandcuffed = false; // Is the dealer skipped?
 
     // Judgement variables
-    public int clear = 0;
-    public int achievement = 0;
+    public int clear1 = 0;
+    public int achievement1 = 0;
     
     // Constructor
     public FakeBucketshotRoulette() {
@@ -291,7 +291,7 @@ public class FakeBucketshotRoulette {
     }
 
     // Main game loop
-    public int play() {
+    public int[] play() {
         loadShotgun(false); // initial load
         GamePrinter.printSlow("Game start! Player goes first.");
 
@@ -304,14 +304,14 @@ public class FakeBucketshotRoulette {
 
             if (playerHealth <= 0) {
                 GamePrinter.printSlow("You have died. Game over!");
-                return clear;
+                break;
             } else if (dealerHealth <= 0) {
                 GamePrinter.printSlow("Dealer has died. You win!");
-                clear++;
-                return clear;
+                clear1 = 1;
+                break;
             }
         }
-
+        return new int[]{clear1, achievement1};
     }
 
     public static void main(String[] args) {

@@ -12,11 +12,13 @@ public class Main {
             opening.startOpening();
             while(game1==0){
                 FakeBucketshotRoulette fakebucketshotroulette=new FakeBucketshotRoulette();
-                int clear=fakebucketshotroulette.play();
-
+                int result[]=fakebucketshotroulette.play();
+                
             }
-            Minesweeper minesweeper=new Minesweeper();
-            minesweeper.startGame();
+            while(game2==0){
+                Minesweeper minesweeper=new Minesweeper();
+                int result[]=minesweeper.play();
+            }
         }
     }
 }

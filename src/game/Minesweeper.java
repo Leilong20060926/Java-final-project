@@ -2,6 +2,11 @@ package game;
 
 import java.util.*;
 public class Minesweeper {
+    // Judgement variables
+    public int clear2 = 0;
+    public int perfect2 = 0;
+    public int achievement2 = 0;
+
     private static int n,m;//n*m map
     private static int mines;//number of mines
     private static int remain=10;//experience points to be collected
@@ -69,7 +74,7 @@ public class Minesweeper {
         System.out.println("   (3) Level 3: 10x10 map with 10 mines; completing a level grants 10 experience points.");
     }
 
-    public void startGame() {
+    public int[] play() {
         gameRules();//introduce game rules
         long startTime=System.currentTimeMillis();//timer
 
@@ -141,7 +146,7 @@ public class Minesweeper {
                     revealed[x][y]=true;
                     printBoard();
                     System.out.println("Game Over!");
-                    return;
+                    break;
                 }
 
                 dfs(x,y);
@@ -162,6 +167,8 @@ public class Minesweeper {
                         long duration=(endTime-startTime)/1000;//passing time(seconds)
                         System.out.println("You have reached 10 experience points and passed all levels!");
                         System.out.println("Total time used: "+duration+" seconds");
+                        clear2 = 1;
+                        if(duration<=100) perfect2 = 1;
                     } else {//not enough experience
                         System.out.println(remain+" points away from passing the game.");
                     }
@@ -169,5 +176,6 @@ public class Minesweeper {
                 }
             }
         }
+        return new int[]{clear2, perfect2, achievement2};
     }
 }
