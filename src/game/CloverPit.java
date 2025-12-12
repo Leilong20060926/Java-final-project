@@ -1,7 +1,7 @@
 package game;
 
 import java.util.*;
-
+import game.extension.GamePrinter;
 /**
  * CloverPitAdvanced
  *
@@ -65,9 +65,9 @@ public class CloverPit {
         }
 
         void welcome() {
-            System.out.println("=== CloverPit Advanced (Console) ===");
-            System.out.println("Game Objective: Each round, you must earn enough money to pay off your debt.");
-            System.out.println("You have items that can modify slot machine probabilities, increase payouts, or save your life. Good luck.\n");
+            GamePrinter.printSlow("=== CloverPit Advanced (Console) ===");
+            GamePrinter.printSlow("Game Objective: Each round, you must earn enough money to pay off your debt.");
+            GamePrinter.printSlow("You have items that can modify slot machine probabilities, increase payouts, or save your life. Good luck.\n");
         }
 
         void loop() {
