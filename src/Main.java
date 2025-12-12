@@ -18,7 +18,7 @@ public class Main {
             Opening opening = new Opening();
             opening.startOpening();
 
-            while(game1==0){
+            /*while(game1==0){
                 opening.bucketshotOpening();
                 delay();
                 FakeBucketshotRoulette fakebucketshotroulette=new FakeBucketshotRoulette();
@@ -34,7 +34,7 @@ public class Main {
                     achievement1=1;
                     opening.bucketshotAchievement();
                 }
-            }
+            }*/
 
             while(game2==0){
                 opening.minesweeperOpening();
