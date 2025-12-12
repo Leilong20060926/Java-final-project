@@ -306,7 +306,7 @@ public class FakeBucketshotRoulette {
                 GamePrinter.printSlow("You have died. Game over!");
                 break;
             } else if (dealerHealth <= 0) {
-                GamePrinter.printSlow("Dealer has died. You win!");
+                GamePrinter.printSlow("Dealer has run out of health. You win!");
                 clear1 = 1;
                 break;
             }
