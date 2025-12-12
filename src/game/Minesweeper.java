@@ -1,7 +1,6 @@
 package game;
 
 import java.util.*;
-
 public class Minesweeper {
     private static int n,m;//n*m map
     private static int mines;//number of mines
