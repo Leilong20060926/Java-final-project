@@ -59,11 +59,11 @@ public class Main {
             }*/
 
             opening.escapeOpening();
-            Scanner scanner = new Scanner(System.in);
-            int choice = scanner.nextInt();
+            Scanner sc = new Scanner(System.in);
+            int choice = sc.nextInt();
             while (choice != 1 && choice != 2) {
                 System.out.println("Invalid input. Please enter 1 or 2.");
-                choice = scanner.nextInt();
+                choice = sc.nextInt();
             }
             if(choice==2){
                 opening.noSteal();
@@ -75,10 +75,10 @@ public class Main {
                     continue;
                 } else {
                     opening.secondSteal();
-                    int choice2 = scanner.nextInt();
+                    int choice2 = sc.nextInt();
                     while (choice2 != 1 && choice2 != 2) {
                         System.out.println("Invalid input. Please enter 1 or 2.");
-                        choice2 = scanner.nextInt();
+                        choice2 = sc.nextInt();
                     }
                     if(choice2==2){
                         opening.secondStealNoSteal();
@@ -132,15 +132,15 @@ public class Main {
         } else {
             System.out.println("Restart? (1: Yes / 0: No)");
         }
-        Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
+        Scanner sc = new Scanner(System.in);
+        int choice = sc.nextInt();
         while (choice != 0 && choice != 1) {
             if(re==0){
                 System.out.println("Invalid input. Please enter 1 (Yes) or 0 (No) to retry.");
             } else {
                 System.out.println("Invalid input. Please enter 1 (Yes) or 0 (No) to restart.");
             }
-            choice = scanner.nextInt();
+            choice = sc.nextInt();
         }
         if (choice == 0) {
             System.out.println("Exiting the game. Goodbye!");
