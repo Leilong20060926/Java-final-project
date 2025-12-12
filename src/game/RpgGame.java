@@ -119,9 +119,9 @@ public class RpgGame{
                     " died! It's a draw!");
         } else if (player.getHP() <= 0) {
             System.out.println("\n" + playerName + " died! " + monsterName + " wins!");
-            clear3++;
         } else if (monster.getHP() <= 0) {
             System.out.println("\n" + monsterName + " died! " + playerName + " wins!");
+            clear3++;
         }
 
         System.out.println("\n===== GAME OVER =====");
