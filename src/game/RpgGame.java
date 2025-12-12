@@ -2,6 +2,7 @@ package game;
 import game.rpg.role;
 import java.util.Random;
 import java.util.Scanner;
+import game.extension.GamePrinter;
 
 public class RpgGame{
     public int[] play (){
@@ -15,23 +16,23 @@ public class RpgGame{
         System.out.println("================================================");
         System.out.println("                RPG GAME RULES                  ");
         System.out.println("================================================");
-        System.out.println("1. You will enter a battle against a randomly");
-        System.out.println("   generated monster.");
-        System.out.println("2. Each turn, you can choose one of two actions:");
-        System.out.println("     (1) Throw Drug Potion to attack monster.");
-        System.out.println("     (2) Drink Healing Potion to recover your HP.");
-        System.out.println("3. Potions are limited. Once you run out, you");
-        System.out.println("   cannot use them anymore.");
-        System.out.println("4. After your action, the monster will counterattack");
-        System.out.println("   if it is still alive.");
-        System.out.println("5. The battle ends when either you or the monster");
-        System.out.println("   reaches 0 HP.");
+        GamePrinter.printSlow("1. You will enter a battle against a randomly");
+        GamePrinter.printSlow("   generated monster.");
+        GamePrinter.printSlow("2. Each turn, you can choose one of two actions:");
+        GamePrinter.printSlow("     (1) Throw Drug Potion to attack monster.");
+        GamePrinter.printSlow("     (2) Drink Healing Potion to recover your HP.");
+        GamePrinter.printSlow("3. Potions are limited. Once you run out, you");
+        GamePrinter.printSlow("   cannot use them anymore.");
+        GamePrinter.printSlow("4. After your action, the monster will counterattack");
+        GamePrinter.printSlow("   if it is still alive.");
+        GamePrinter.printSlow("5. The battle ends when either you or the monster");
+        GamePrinter.printSlow("   reaches 0 HP.");
         System.out.println("================================================\n");
 
         System.out.println("============================");
         System.out.println("Welcome to the RPG Game !");
         System.out.println("============================");
-        System.out.print("Enter your character's name: ");
+        GamePrinter.printSlow("Enter your character's name: ");
         String playerName = sc.nextLine();
 
         role player = new role(playerName, 31, 18, 10);  // Create player character
@@ -53,7 +54,7 @@ public class RpgGame{
             default -> new role("Witch", 28, 18, 13);
         };
         
-        System.out.println(" Random Created: " + monsterName + " | HP: " + monster.getHP() + 
+        GamePrinter.printSlow(" Random Created: " + monsterName + " | HP: " + monster.getHP() + 
                             " | ATK: " + monster.getATK() +
                              " | DEF: " + monster.getDEF());
 
