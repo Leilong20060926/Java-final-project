@@ -80,11 +80,11 @@ public class Minesweeper {
         long startTime=System.currentTimeMillis();//timer
 
         while(remain>0 && gameover==0){//continue playing the game until player collects enough experience points.
-            System.out.println("Please select difficulty: (1/2/3)");
+            GamePrinter.printSlow("Please select difficulty: (1/2/3)");
             int level=sc.nextInt();
             while(level!=1 && level!=2 && level!=3){//if not at the specified level
-                System.out.println("Difficulty level not within the selection range.");
-                System.out.println("Please select difficulty again: (1/2/3)");
+                GamePrinter.printSlow("Difficulty level not within the selection range.");
+                GamePrinter.printSlow("Please select difficulty again: (1/2/3)");
                 level=sc.nextInt();
             }
 
