@@ -126,7 +126,14 @@ public class Ending {
                         "\n" + 
                         "DEALER: \"You’ve completed everything... Every challenge, every game, and every choice. You’ve surpassed expectations, player.\"\n" + 
                         "\n" + 
-                        "[ALL ACHIEVEMENT UNLOCKED ENDING]\n" + 
-                        "");
+                        "[ALL ACHIEVEMENT UNLOCKED ENDING]\n\n");
+        System.out.println(" ██████████                      ████                    \n" + 
+                         "$$███$$$███                     $$███                    \n" + 
+                        " $███   $$███  ██████   ██████   $███   ██████  ████████ \n" + 
+                        " $███    $███ ███$$███ $$$$$███  $███  ███$$███$$███$$███\n" + 
+                        " $███    $███$███████   ███████  $███ $███████  $███ $$$ \n" + 
+                        " $███    ███ $███$$$   ███$$███  $███ $███$$$   $███     \n" + 
+                        " ██████████  $$██████ $$████████ █████$$██████  █████    \n" + 
+                        "$$$$$$$$$$$$    $$$$$$   $$$$$$$$ $$$$  $$$$$$  $$$$$     ");
     }
 }
