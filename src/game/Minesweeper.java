@@ -10,6 +10,7 @@ public class Minesweeper {
     private static int n,m;//n*m map
     private static int mines;//number of mines
     private static int remain=10;//experience points to be collected
+    private static int gameover=0;//0=not stepped on mine yet, 1=stepped on mine
     private static int[][] board;//number of mines in eight directions, -1=mine
     private static boolean[][] revealed;//1=opened 0=hasn't been opened
     private static int[] dx={-1,-1,-1,0,0,1,1,1};
@@ -78,7 +79,7 @@ public class Minesweeper {
         gameRules();//introduce game rules
         long startTime=System.currentTimeMillis();//timer
 
-        while(remain>0){//continue playing the game until player collects enough experience points.
+        while(remain>0 && gameover==0){//continue playing the game until player collects enough experience points.
             System.out.println("Please select difficulty: (1/2/3)");
             int level=sc.nextInt();
             while(level!=1 && level!=2 && level!=3){//if not at the specified level
@@ -146,6 +147,7 @@ public class Minesweeper {
                     revealed[x][y]=true;
                     printBoard();
                     System.out.println("Game Over!");
+                    gameover=1;
                     break;
                 }
 

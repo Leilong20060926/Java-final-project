@@ -1,3 +1,4 @@
+import game.CloverPit;
 import game.FakeBucketshotRoulette;
 import game.Minesweeper;
 import game.RpgGame;
@@ -19,6 +20,7 @@ public class Main {
 
             while(game1==0){
                 opening.bucketshotOpening();
+                delay();
                 FakeBucketshotRoulette fakebucketshotroulette=new FakeBucketshotRoulette();
                 int result[]=fakebucketshotroulette.play();
                 game1=result[0];
@@ -36,6 +38,7 @@ public class Main {
 
             while(game2==0){
                 opening.minesweeperOpening();
+                delay();
                 Minesweeper minesweeper=new Minesweeper();
                 int result[]=minesweeper.play();
                 game2=result[0];
@@ -88,6 +91,7 @@ public class Main {
 
             while(game3==0){
                 opening.rpgOpening();
+                delay();
                 RpgGame rpggame=new RpgGame();
                 int result[]=rpggame.play();
                 game3=result[0];
@@ -103,7 +107,20 @@ public class Main {
                 }
             }
 
-            
+            while(game4==0){
+                opening.cloverPitOpening();
+                delay();
+                CloverPit cloverpit=new CloverPit();
+                
+            }
+        }
+    }
+
+    public static void delay() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 
