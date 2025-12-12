@@ -125,8 +125,8 @@ public class Opening {
                         "You can feel the weight of the decision—this could be your chance to escape, or it could bring deadly consequences. You glance at the Dealer, and your fingers twitch toward the keyring...\n" + 
                         "\n" + 
                         "[Option: Steal the keyring?]\n" + 
-                        "[A) Steal the keyring]\n" + 
-                        "[B) Don’t steal the keyring]\n" );
+                        "[1) Steal the keyring]\n" + 
+                        "[2) Don’t steal the keyring]\n" );
     }
 
     public void noSteal() {
@@ -141,7 +141,7 @@ public class Opening {
                         "You walk forward, prepared for whatever comes next.\n" );
     }
 
-    public void SecondSteal() {
+    public void secondSteal() {
         StoryPrinter.printSlowWithSkip("[You quickly snatch the keyring from the Dealer's belt, but you feel his gaze shift just as your hand brushes against the metal.]\n" + 
                         "\n" + 
                         "The Dealer’s eyes flicker toward you for a moment. A sudden chill runs down your spine.\n" + 
@@ -149,17 +149,17 @@ public class Opening {
                         "You freeze for a moment, realizing he might have noticed. His mask remains expressionless, but something feels off.\n" + 
                         "\n" + 
                         "[Option: Steal the keyring anyway?]\n" + 
-                        "[A)  Steal the keyring]\n" + 
-                        "[B) Don’t steal the keyring]\n" );
+                        "[1)  Steal the keyring]\n" + 
+                        "[2) Don’t steal the keyring]\n" );
     }
 
-    public void SecondStealNoSteal() {
+    public void secondStealNoSteal() {
         StoryPrinter.printSlowWithSkip("You decide to let it go. The keyring slips back into the Dealer’s belt as you walk forward, determined to face the next challenge.\n" + 
                         "\n" + 
                         "DEALER (smiling lightly): \"Wise. Some things are better left untouched.\"\n" );
     }
     
-    public void RpgOpening() {
+    public void rpgOpening() {
         StoryPrinter.printSlowWithSkip("[You enter a dark arena. The gate slams shut behind you.]\n" + 
                         "\n" + 
                         "The ground trembles beneath your feet.\n" + 
@@ -185,7 +185,7 @@ public class Opening {
                         "DEALER: \"Fight. Survive. Entertain us.\"\n" );
     }
     
-    public void RpgClear() {
+    public void rpgClear() {
         StoryPrinter.printSlowWithSkip("The creature collapses, fading into the shadows.\n" + 
                         "The arena lights flicker, then stabilize.\n" + 
                         "\n" + 
@@ -197,7 +197,7 @@ public class Opening {
                         "DEALER: \"One final game remains.\"\n" );
     }
 
-    public void RpgAchievement() {
+    public void rpgAchievement() {
         StoryPrinter.printSlowWithSkip("[Achievement Unlocked] \n" + 
                         "Creeper? … Aww Man:\n" + 
                         "Survived the Creeper's wrath and lived to fight another day.\n" );

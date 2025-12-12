@@ -168,7 +168,8 @@ public class Minesweeper {
                         System.out.println("You have reached 10 experience points and passed all levels!");
                         System.out.println("Total time used: "+duration+" seconds");
                         clear2 = 1;
-                        if(duration<=100) perfect2 = 1;
+                        if(duration<=150) perfect2=1;
+                        if(duration<=100) achievement2=1;
                     } else {//not enough experience
                         System.out.println(remain+" points away from passing the game.");
                     }

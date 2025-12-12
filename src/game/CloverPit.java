@@ -1,3 +1,5 @@
+package game;
+
 import java.util.*;
 
 /**
@@ -18,7 +20,7 @@ import java.util.*;
  *
  * 可擴充：更多道具、事件、商店、GUI
  */
-public class CloverPitAdvanced {
+public class CloverPit {
     public static void main(String[] args) {
         Game game = new Game();
         game.start();

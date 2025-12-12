@@ -4,7 +4,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class RpgGame{
-    public static void main (String[]args){
+    public int[] play (){
+        // Judgement variables
+        int clear3 = 0;
+        int achievement3 = 0;
+
         Scanner sc = new Scanner(System.in);
         Random rand = new Random(); // Random number generator
 
@@ -108,18 +112,21 @@ public class RpgGame{
             System.out.println( playerName + " HP : " + player.getHP() + 
                                 " | " + monsterName + " HP : " + monster.getHP());
         
-    }
+        }
         // Determine the outcome of the battle
         if (player.getHP() <= 0 && monster.getHP() <= 0) {
             System.out.println("\nBoth " + playerName + " and " + monsterName +
                     " died! It's a draw!");
         } else if (player.getHP() <= 0) {
             System.out.println("\n" + playerName + " died! " + monsterName + " wins!");
+            clear3++;
         } else if (monster.getHP() <= 0) {
             System.out.println("\n" + monsterName + " died! " + playerName + " wins!");
         }
 
         System.out.println("\n===== GAME OVER =====");
 
-}
+        return new int[]{clear3, achievement3};
+
+    }
 }
