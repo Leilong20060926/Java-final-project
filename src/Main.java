@@ -1,4 +1,4 @@
-import game.CloverPit;
+
 import game.CloverPitAdvanced;
 import game.FakeBucketshotRoulette;
 import game.Minesweeper;
