@@ -1,49 +1,51 @@
 package story.extension;
 
-import java.util.Scanner;
-
 public class StoryPrinter {
 
-    // Set delay between characters (milliseconds)
     private static int textDelay = 35;
-
-    // Scanner for user input
-    private static Scanner scanner = new Scanner(System.in);
 
     public static void setTextDelay(int ms) {
         textDelay = ms;
     }
 
-    // Print slow text with delay, but allow the user to skip using Enter
+    // Print slow text with Enter key skip for this paragraph only
     public static void printSlowWithSkip(String text) {
-        // Start a thread to detect Enter key press
+        final boolean[] skipThisParagraph = {false};
+
         Thread skipThread = new Thread(() -> {
-            scanner.nextLine();  // Wait for Enter key press
+            try {
+                while (System.in.available() == 0) {
+                    Thread.sleep(10);
+                }
+                skipThisParagraph[0] = true;  // Enter pressed
+                System.in.read();             // consume Enter so next call won't be skipped
+            } catch (Exception e) {
+                // ignore
+            }
         });
 
-        // Start the thread
         skipThread.start();
 
-        // Print the text with delay, check if the user pressed Enter
-        for (char c : text.toCharArray()) {
-            // Check if the user pressed Enter to skip
-            if (skipThread.isAlive()) {
-                System.out.print(c);
-                try {
-                    Thread.sleep(textDelay);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            } else {
-                // If Enter is pressed, break out of the loop and print the rest instantly
-                System.out.print(text.substring(text.indexOf(c)));
+        for (int i = 0; i < text.length(); i++) {
+            if (skipThisParagraph[0]) {
+                // Enter pressed → print the rest of THIS paragraph instantly
+                System.out.print(text.substring(i));
                 break;
             }
+
+            System.out.print(text.charAt(i));
+
+            try {
+                Thread.sleep(textDelay);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
+
         System.out.println();
     }
 
-    // Print slow text without newline
+    // Slow print without newline
     public static void printSlowRaw(String text) {
         for (char c : text.toCharArray()) {
             System.out.print(c);
@@ -55,3 +57,4 @@ public class StoryPrinter {
         }
     }
 }
+
