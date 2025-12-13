@@ -1,4 +1,6 @@
 import game.CloverPit;
+import game.FakeBucketshotRoulette;
+import game.Minesweeper;
 import game.RpgGame;
 import java.util.Scanner;
 import story.Ending;
@@ -22,8 +24,8 @@ public class Main {
             while(game1==0){
                 opening.bucketshotOpening();
                 delay();
-                FakeBucketshotRoulette fakebucketshotroulette=new FakeBucketshotRoulette();
-                int result[]=fakebucketshotroulette.play();
+                FakeBucketshotRoulette bucketshot=new FakeBucketshotRoulette();
+                int result[]=bucketshot.play();
                 game1=result[0];
                 if(game1==0){
                     ending.badEnding();
