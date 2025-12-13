@@ -144,5 +144,14 @@ public class Ending {
                         "In another, you’re living a simple, quiet life. You left The Pit behind, starting fresh. The scars of the past remain, but you have found peace, even if the shadows of The Pit sometimes lurk in the background.\n" + 
                         "However, in some timelines, you didn’t escape at all. The casino’s hold on you was too strong, and you are still trapped, a shadow of the person you once were, with no hope of breaking free.\n" + 
                         "The final universe... It's one of endless cycles. You tried to escape, but The Pit always finds a way to pull you back in. Ten years later, you’re back in the game, and the cycle repeats again.\n\n" );
+        System.out.println("                 *       +");
+        System.out.println("           '                  |");
+        System.out.println("       ()    .-.,=\"``\"=.    - o -");
+        System.out.println("             '=/_       \\     |");
+        System.out.println("          *   |  '=._    |");
+        System.out.println("               \\     `=./`,        '");
+        System.out.println("            .   '=.__.=' `='      *");
+        System.out.println("    +                         +");
+        System.out.println("       O      *        '       .\n\n");
     }
 }
