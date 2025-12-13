@@ -136,4 +136,13 @@ public class Ending {
                         " ██████████  $$██████ $$████████ █████$$██████  █████    \n" + 
                         "$$$$$$$$$$$$    $$$$$$   $$$$$$$$ $$$$  $$$$$$  $$$$$     ");
     }
+
+    public void easterEgg(){
+        StoryPrinter.printSlowWithSkip("[Ten Years Later – The Protagonist’s Life]\n" + 
+                        "The world has changed, but so have you. Ten years have passed since you escaped The Pit, and your choices have carved different paths, each one leading to a different version of your life.\n" + 
+                        "In one universe, you’ve become the Dealer, ruling over The Pit with an iron fist. The luxury of power surrounds you, but the weight of your choices haunts you every day.\n" + 
+                        "In another, you’re living a simple, quiet life. You left The Pit behind, starting fresh. The scars of the past remain, but you have found peace, even if the shadows of The Pit sometimes lurk in the background.\n" + 
+                        "However, in some timelines, you didn’t escape at all. The casino’s hold on you was too strong, and you are still trapped, a shadow of the person you once were, with no hope of breaking free.\n" + 
+                        "The final universe... It's one of endless cycles. You tried to escape, but The Pit always finds a way to pull you back in. Ten years later, you’re back in the game, and the cycle repeats again.\n\n" );
+    }
 }

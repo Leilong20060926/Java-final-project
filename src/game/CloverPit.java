@@ -61,8 +61,8 @@ public class CloverPit {
 
             loop();
 
-            // Achievement: used CoinMultiplier at least 3 times during the game and survived
-            if (player.isAlive() && player.coinMultiplierStacks >= 3) {
+            // Achievement: used CoinMultiplier at least once during the game and survived
+            if (player.isAlive() && player.coinMultiplierStacks >= 1) {
                 achievement4 = 1;
             }
 

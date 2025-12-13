@@ -12,6 +12,7 @@ public class Main {
         Ending ending = new Ending();
         int achievement1=0,achievement2=0,achievement3=0,achievement4=0;
         int achievementall=0;
+        int ending1=0,ending2=0,ending3=0,ending4=0,ending5=0,ending6=0,ending7=0;
 
         while(true){
             int game1=0,game2=0,game3=0,game4=0;
@@ -28,6 +29,7 @@ public class Main {
                 game1=result[0];
                 if(game1==0){
                     ending.badEnding();
+                    ending4++;
                     continueGame(0);
                 } else {
                     opening.bucketshotClear();
@@ -47,6 +49,7 @@ public class Main {
                 gameperfect2=result[1];
                 if(game2==0){
                     ending.badEnding();
+                    ending4++;
                     continueGame(0);
                 }else if(gameperfect2==1) {
                     opening.minesweeperPerfectClear();
@@ -71,6 +74,7 @@ public class Main {
                 double rand = Math.random();
                 if(rand<0.5){
                     ending.escapeEnding();
+                    ending5++;
                     continueGame(1);
                     continue;
                 } else {
@@ -84,6 +88,7 @@ public class Main {
                         opening.secondStealNoSteal();
                     } else {
                         ending.failedEscapeEnding();
+                        ending6++;
                         continueGame(1);
                         continue;
                     }
@@ -98,6 +103,7 @@ public class Main {
                 game3=result[0];
                 if(game3==0){
                     ending.badEnding();
+                    ending4++;
                     continueGame(0);
                 } else {
                     opening.rpgClear();
@@ -117,6 +123,7 @@ public class Main {
                 gameperfect4=result[1];
                 if(game4==0){
                     ending.badEnding();
+                    ending4++;
                     continueGame(0);
                 } else if(gameperfect4==1) {
                     opening.cloverPitPerfectClear();
@@ -132,18 +139,27 @@ public class Main {
             if(achievementall==0 && achievement1==1 && achievement2==1 && achievement3==1 && achievement4==1){
                 achievementall=1;
                 ending.achievementEnding();
+                ending7++;
                 continueGame(1);
             }
 
             if(gameperfect2==0 && gameperfect4==0){
                 ending.neutralEnding();
+                ending2++;
                 continueGame(1);
             } else if(gameperfect2==1 && gameperfect4==1){
                 ending.dealerEnding();
+                ending3++;
                 continueGame(1);
             } else {
                 ending.trueEnding();
+                ending1++;
                 continueGame(1);
+            }
+
+            if(ending1>0 && ending2>0 && ending3>0 && ending4>0 && ending5>0 && ending6>0 && ending7>0){
+                ending.easterEgg();
+                break;
             }
         }
     }
