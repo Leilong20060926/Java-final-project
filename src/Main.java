@@ -159,6 +159,17 @@ public class Main {
 
             if(ending1>0 && ending2>0 && ending3>0 && ending4>0 && ending5>0 && ending6>0 && ending7>0){
                 ending.easterEgg();
+                System.out.println("==================================");
+                System.out.println("     Endings Completion Count     ");
+                System.out.println("==================================");
+                System.out.println(" True Ending: " + ending1 + " time(s)");
+                System.out.println(" Neutral Ending: " + ending2 + " time(s)");
+                System.out.println(" Dealer Ending: " + ending3 + " time(s)");
+                System.out.println(" Bad Ending: " + ending4 + " time(s)");
+                System.out.println(" Escape Ending: " + ending5 + " time(s)");
+                System.out.println(" Failed Escape Ending: " + ending6 + " time(s)");
+                System.out.println(" Achievement Ending: " + ending7 + " time(s)");
+                System.out.println("==================================");
                 break;
             }
         }
