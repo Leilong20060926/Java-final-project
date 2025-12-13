@@ -66,11 +66,16 @@ public class CloverPit {
                 achievement4 = 1;
             }
 
+            // Perfect: final money 200 or more
+            if (player.isAlive() && player.money >= 200) {
+                perfect4 = 1;
+            }
+
             return new int[]{player.isAlive() ? 1 : 0, perfect4, achievement4};
         }
 
         void welcome() {
-            GamePrinter.printSlow("=== CloverPit Advanced (Console) ===");
+            GamePrinter.printSlow("=== CloverPit (Console) ===");
             GamePrinter.printSlow("Game Objective: Each round, you must earn enough money to pay off your debt.");
             GamePrinter.printSlow("You have items that can modify slot machine probabilities, increase payouts, or save your life. Good luck.\n");
         }
