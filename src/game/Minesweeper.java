@@ -17,6 +17,11 @@ public class Minesweeper {
     private static int[] dy={-1,0,1,-1,1,-1,0,1};//eight directions
     private static Scanner sc=new Scanner(System.in);
 
+    public static void main(String[] args) {
+        Minesweeper minesweeper=new Minesweeper();
+        minesweeper.play();
+    }
+
     //print board to player
     private static void printBoard(){
         System.out.print("\n   ");

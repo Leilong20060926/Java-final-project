@@ -5,6 +5,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class RpgGame{
+    public static void main(String[] args) {
+        RpgGame rpgGame = new RpgGame();
+        rpgGame.play();
+    }
+
     public int[] play (){
         // Judgement variables
         int clear3 = 0;
