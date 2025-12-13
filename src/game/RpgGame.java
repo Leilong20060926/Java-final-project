@@ -1,8 +1,8 @@
 package game;
+import game.extension.GamePrinter;
 import game.rpg.role;
 import java.util.Random;
 import java.util.Scanner;
-import game.extension.GamePrinter;
 
 public class RpgGame{
     public int[] play (){
@@ -123,6 +123,9 @@ public class RpgGame{
         } else if (monster.getHP() <= 0) {
             System.out.println("\n" + monsterName + " died! " + playerName + " wins!");
             clear3++;
+            if ("Creeper".equals(monsterName)) {
+                achievement3 = 1;
+            }
         }
 
         return new int[]{clear3, achievement3};

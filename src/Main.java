@@ -32,7 +32,7 @@ public class Main {
                 } else {
                     opening.bucketshotClear();
                 }
-                if(achievement1==0 && result[1]==1){
+                if(achievement1==0 && result[1]==1 && game1==1){
                     achievement1=1;
                     opening.bucketshotAchievement();
                 }
@@ -102,7 +102,7 @@ public class Main {
                 } else {
                     opening.rpgClear();
                 }
-                if(achievement3==0 && result[1]==1){
+                if(achievement3==0 && result[1]==1 && game3==1){
                     achievement3=1;
                     opening.rpgAchievement();
                 }
@@ -123,7 +123,7 @@ public class Main {
                 } else {
                     opening.cloverPitNormalClear();
                 }
-                if(achievement4==0 && result[2]==1){
+                if(achievement4==0 && result[2]==1 && game4==1){
                     achievement4=1;
                     opening.cloverPitAchievement();
                 }

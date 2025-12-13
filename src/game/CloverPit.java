@@ -1,7 +1,7 @@
 package game;
 
-import java.util.*;
 import game.extension.GamePrinter;
+import java.util.*;
 /**
  * CloverPitAdvanced
  *
@@ -60,6 +60,11 @@ public class CloverPit {
             player.addItem(new DebtReducer());     // Active, reduces this round's debt
 
             loop();
+
+            // Achievement: used CoinMultiplier at least 3 times during the game and survived
+            if (player.isAlive() && player.coinMultiplierStacks >= 3) {
+                achievement4 = 1;
+            }
 
             return new int[]{player.isAlive() ? 1 : 0, perfect4, achievement4};
         }
@@ -164,7 +169,7 @@ public class CloverPit {
 
         int computeDebt(int round) {
             // Flexible debt increase (adjustable)
-            return baseDebt + (round - 1) * 25; // 30,55,80,105,130 (example)
+            return baseDebt + (round - 1) * 30; // 30,60,90,120,150 (example)
         }
 
         /* ---------- spin/slot mechanics ---------- */

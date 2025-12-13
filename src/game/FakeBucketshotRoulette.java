@@ -25,6 +25,7 @@ public class FakeBucketshotRoulette {
     private List<Item> playerItems;
     private int currentDamage = 1; // Default damage (Saw changes this to 2)
     private boolean dealerHandcuffed = false; // Is the dealer skipped?
+    private boolean usedBeer = false; // track whether player used beer this run
 
     // Judgement variables
     public int clear1 = 0;
@@ -180,6 +181,7 @@ public class FakeBucketshotRoulette {
                         case BEER:
                             if (!shotgun.isEmpty())
                                 GamePrinter.printSlow("Ejected: " + shotgun.remove(0));
+                            usedBeer = true;
                             break;
                         case CIGARETTES:
                             if (playerHealth < MAX_HEALTH)
@@ -308,6 +310,9 @@ public class FakeBucketshotRoulette {
             } else if (dealerHealth <= 0) {
                 GamePrinter.printSlow("Dealer has run out of health. You win!");
                 clear1 = 1;
+                if (usedBeer) {
+                    achievement1 = 1;
+                }
                 break;
             }
         }
