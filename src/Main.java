@@ -1,6 +1,4 @@
 import game.CloverPit;
-import game.FakeBucketshotRoulette;
-import game.Minesweeper;
 import game.RpgGame;
 import java.util.Scanner;
 import story.Ending;
@@ -10,7 +8,7 @@ public class Main {
     private static final Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
         Ending ending = new Ending();
-        int achievement1=0,achievement2=0,achievement3=0,achievement4=0;
+        int achievement1=1,achievement2=1,achievement3=0,achievement4=0;
         int achievementall=0;
         int ending1=0,ending2=0,ending3=0,ending4=0,ending5=0,ending6=0,ending7=0;
 
@@ -21,7 +19,7 @@ public class Main {
             Opening opening = new Opening();
             opening.startOpening();
 
-            while(game1==0){
+            /*while(game1==0){
                 opening.bucketshotOpening();
                 delay();
                 FakeBucketshotRoulette fakebucketshotroulette=new FakeBucketshotRoulette();
@@ -60,7 +58,7 @@ public class Main {
                     achievement2=1;
                     opening.minesweeperAchievement();
                 }
-            }
+            }*/
 
             opening.escapeOpening();
             int choice = sc.nextInt();
