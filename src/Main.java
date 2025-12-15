@@ -118,7 +118,7 @@ public class Main {
                 opening.cloverPitOpening();
                 delay();
                 CloverPit cloverpit=new CloverPit();
-                int result[]=cloverpit.play();
+                int result[]=cloverpit.start();
                 game4=result[0];
                 gameperfect4=result[1];
                 if(game4==0){
