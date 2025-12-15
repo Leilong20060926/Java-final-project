@@ -1,19 +1,29 @@
 package game;
-
+import game.extension.GamePrinter;
 import java.util.*;
-
 public class Minesweeper {
-    static int n,m;//n*m map
-    static int mines;//number of mines
-    static int remain=10;//experience points to be collected
-    static int[][] board;//number of mines in eight directions, -1=mine
-    static boolean[][] revealed;//1=opened 0=hasn't been opened
-    static int[] dx={-1,-1,-1,0,0,1,1,1};
-    static int[] dy={-1,0,1,-1,1,-1,0,1};//eight directions
-    static Scanner sc=new Scanner(System.in);
+    // Judgement variables
+    public int clear2 = 0;
+    public int perfect2 = 0;
+    public int achievement2 = 0;
+
+    private static int n,m;//n*m map
+    private static int mines;//number of mines
+    private static int remain=10;//experience points to be collected
+    private static int gameover=0;//0=not stepped on mine yet, 1=stepped on mine
+    private static int[][] board;//number of mines in eight directions, -1=mine
+    private static boolean[][] revealed;//1=opened 0=hasn't been opened
+    private static int[] dx={-1,-1,-1,0,0,1,1,1};
+    private static int[] dy={-1,0,1,-1,1,-1,0,1};//eight directions
+    private static Scanner sc=new Scanner(System.in);
+
+    public static void main(String[] args) {
+        Minesweeper minesweeper=new Minesweeper();
+        minesweeper.play();
+    }
 
     //print board to player
-    static void printBoard(){
+    private static void printBoard(){
         System.out.print("\n   ");
         for(int j=0;j<m;j++) System.out.print(j + " ");//print numbers 0 to m
         System.out.println();
@@ -30,7 +40,7 @@ public class Minesweeper {
     }
 
     //Automatically open board[x][y]=0
-    static void dfs(int x,int y){
+    private static void dfs(int x,int y){
         if(x<0 || x>=n || y<0 || y>=m) return;//out of range
         if(revealed[x][y]) return;//opened
         revealed[x][y]=true;//(x,y) has opened
@@ -39,7 +49,7 @@ public class Minesweeper {
     }
 
     //set level parameters
-    static int setLevel(int level){
+    private static int setLevel(int level){
         int experience=0;
         if(level==1){
             n=4;
@@ -61,25 +71,29 @@ public class Minesweeper {
     }
 
     //game rules
-    static void gameRules(){
-        System.out.println("Minesweeper\nGame rules:");
-        System.out.println("1. Players start with only one life; stepping on a landmine ends the game.");
-        System.out.println("2. Players need to collect 10 experience points, which vary depending on the level difficulty.");
-        System.out.println("   (1) Level 1: 4x4 map with 4 mines; completing a level grants 4 experience points.");
-        System.out.println("   (2) Level 2: 6x6 map with 6 mines; completing a level grants 6 experience points.");
-        System.out.println("   (3) Level 3: 10x10 map with 10 mines; completing a level grants 10 experience points.");
+    private static void gameRules(){
+        GamePrinter.printSlow("Minesweeper\nGame rules:");
+        GamePrinter.printSlow("1. Players start with only one life; stepping on a landmine ends the game.");
+        GamePrinter.printSlow("2. Players need to collect 10 experience points, which vary depending on the level difficulty.");
+        GamePrinter.printSlow("   (1) Level 1: 4x4 map with 4 mines; completing a level grants 4 experience points.");
+        GamePrinter.printSlow("   (2) Level 2: 6x6 map with 6 mines; completing a level grants 6 experience points.");
+        GamePrinter.printSlow("   (3) Level 3: 10x10 map with 10 mines; completing a level grants 10 experience points.");
     }
 
-    public void startGame() {
+    public int[] play() {
+        // Reset state variables for new game
+        remain=10;
+        gameover=0;
+        
         gameRules();//introduce game rules
         long startTime=System.currentTimeMillis();//timer
 
-        while(remain>0){//continue playing the game until player collects enough experience points.
-            System.out.println("Please select difficulty: (1/2/3)");
+        while(remain>0 && gameover==0){//continue playing the game until player collects enough experience points.
+            GamePrinter.printSlow("Please select difficulty: (1/2/3)");
             int level=sc.nextInt();
             while(level!=1 && level!=2 && level!=3){//if not at the specified level
-                System.out.println("Difficulty level not within the selection range.");
-                System.out.println("Please select difficulty again: (1/2/3)");
+                GamePrinter.printSlow("Difficulty level not within the selection range.");
+                GamePrinter.printSlow("Please select difficulty again: (1/2/3)");
                 level=sc.nextInt();
             }
 
@@ -142,7 +156,8 @@ public class Minesweeper {
                     revealed[x][y]=true;
                     printBoard();
                     System.out.println("Game Over!");
-                    return;
+                    gameover=1;
+                    break;
                 }
 
                 dfs(x,y);
@@ -163,6 +178,9 @@ public class Minesweeper {
                         long duration=(endTime-startTime)/1000;//passing time(seconds)
                         System.out.println("You have reached 10 experience points and passed all levels!");
                         System.out.println("Total time used: "+duration+" seconds");
+                        clear2 = 1;
+                        if(duration<=150) perfect2=1;
+                        if(duration<=100) achievement2=1;
                     } else {//not enough experience
                         System.out.println(remain+" points away from passing the game.");
                     }
@@ -170,5 +188,6 @@ public class Minesweeper {
                 }
             }
         }
+        return new int[]{clear2, perfect2, achievement2};
     }
 }

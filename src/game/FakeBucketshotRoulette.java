@@ -1,13 +1,13 @@
 package game;
 
-import java.util.Scanner;
 import game.extension.GamePrinter;
 import game.extension.ruleDisplay;
 import game.extension.Item;
-import java.util.Random;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class FakeBucketshotRoulette {
     // Initial health
@@ -26,7 +26,12 @@ public class FakeBucketshotRoulette {
     private List<Item> playerItems;
     private int currentDamage = 1; // Default damage (Saw changes this to 2)
     private boolean dealerHandcuffed = false; // Is the dealer skipped?
+    private boolean usedBeer = false; // track whether player used beer this run
 
+    // Judgement variables
+    public int clear1 = 0;
+    public int achievement1 = 0;
+    
     // Constructor
     public FakeBucketshotRoulette() {
         shotgun = new ArrayList<>();
@@ -177,6 +182,7 @@ public class FakeBucketshotRoulette {
                         case BEER:
                             if (!shotgun.isEmpty())
                                 GamePrinter.printSlow("Ejected: " + shotgun.remove(0));
+                            usedBeer = true;
                             break;
                         case CIGARETTES:
                             if (playerHealth < MAX_HEALTH)
@@ -287,17 +293,6 @@ public class FakeBucketshotRoulette {
         }
     }
 
-    // Game over check
-    private void isGameOver() {
-        if (playerHealth <= 0) {
-            GamePrinter.printSlow("You have died. Game over!");
-            System.exit(0);
-        } else if (dealerHealth <= 0) {
-            GamePrinter.printSlow("Dealer has died. You win!");
-            System.exit(0);
-        }
-    }
-
     // Main game loop
     public void play() {
         ruleDisplay.showIntro(scanner);
@@ -310,12 +305,24 @@ public class FakeBucketshotRoulette {
             } else {
                 dealerAction();
             }
-            isGameOver();
+
+            if (playerHealth <= 0) {
+                GamePrinter.printSlow("You have died. Game over!");
+                break;
+            } else if (dealerHealth <= 0) {
+                GamePrinter.printSlow("Dealer has run out of health. You win!");
+                clear1 = 1;
+                if (usedBeer) {
+                    achievement1 = 1;
+                }
+                break;
+            }
         }
+        return new int[]{clear1, achievement1};
     }
 
     public static void main(String[] args) {
         FakeBucketshotRoulette game = new FakeBucketshotRoulette();
-        game.play(); // start game
+        game.play();
     }
 }
