@@ -2,6 +2,7 @@ package game;
 
 import java.util.Scanner;
 import game.extension.GamePrinter;
+import game.extension.ruleDisplay;
 import game.extension.Item;
 import java.util.Random;
 import java.util.ArrayList;
@@ -299,6 +300,7 @@ public class FakeBucketshotRoulette {
 
     // Main game loop
     public void play() {
+        ruleDisplay.showIntro(scanner);
         loadShotgun(false); // initial load
         GamePrinter.printSlow("Game start! Player goes first.");
 

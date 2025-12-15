@@ -4,7 +4,7 @@ public class GamePrinter {
 
     // Set delay between characters (milliseconds)
     
-    private static int textDelay = 35;
+    private static int textDelay = 20;
 
     public static void setTextDelay(int ms) {
         textDelay = ms;
