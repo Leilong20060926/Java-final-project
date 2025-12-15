@@ -1,8 +1,8 @@
 package game;
 
 import game.extension.GamePrinter;
-import game.extension.ruleDisplay;
 import game.extension.Item;
+import game.extension.ruleDisplay;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -294,7 +294,7 @@ public class FakeBucketshotRoulette {
     }
 
     // Main game loop
-    public void play() {
+    public int[] play() {
         ruleDisplay.showIntro(scanner);
         loadShotgun(false); // initial load
         GamePrinter.printSlow("Game start! Player goes first.");
