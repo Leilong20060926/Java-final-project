@@ -157,7 +157,7 @@ public class CloverPit {
 
         int[] getResult() {
             int won = player.isAlive() && round > maxRounds ? 1 : 0;
-            int perfect = (won == 1 && player.hp == 100) ? 1 : 0;
+            int perfect = (won == 1 && player.hp >= 60) ? 1 : 0;
             int achievement = (won == 1 && player.gotThreeSevens) ? 1 : 0;
             return new int[]{won, perfect, achievement};
         }
