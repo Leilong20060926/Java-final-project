@@ -48,8 +48,8 @@ public class CloverPit {
             "If you clear all rounds with HP remaining, you win.",
             "",
             "Initial Status:",
-            "- Money: 0",
-            "- Debt: 20",
+            "- Money: $0",
+            "- Debt: $20",
             "- HP: 100",
             "",
             "How a Spin Works:",
@@ -65,28 +65,28 @@ public class CloverPit {
             "- Diamond (💎): 8%",
             "",
             "Rewards (Three of a Kind):",
-            "- Diamond 💎: +150",
-            "- Seven 7️⃣: +100",
-            "- Grape 🍇: +50",
-            "- Cherry 🍒: +20",
+            "- Diamond 💎: +$150",
+            "- Seven 7️⃣: +$100",
+            "- Grape 🍇: +$50",
+            "- Cherry 🍒: +$20",
             "",
             "Rewards (Two of a Kind):",
-            "- Diamond 💎: +60",
-            "- Seven 7️⃣: +30",
-            "- Grape 🍇: +15",
-            "- Cherry 🍒: +5",
+            "- Diamond 💎: +$60",
+            "- Seven 7️⃣: +$30",
+            "- Grape 🍇: +$15",
+            "- Cherry 🍒: +$5",
             "",
             "Question Mark Effects:",
             "❔❔ grants ONE normal item (33% each):",
             "- Lucky Charm (Next spin: higher 7️⃣ chance)",
             "- Healing Potion (+30 HP)",
-            "- Debt Contract (Debt -15)",
+            "- Debt Contract (Debt -$15)",
             "",
             "❔❔❔ grants ONE powerful item (33" +
                     "" + "% each):",
             "- Super Lucky Charm (Next spin: higher 💎 chance)",
             "- Super Healing Potion (Restore full HP)",
-            "- Super Debt Contract (Debt -50)",
+            "- Super Debt Contract (Debt -$50)",
             "",
             "Items are one-time use.",
             "",
@@ -158,7 +158,7 @@ public class CloverPit {
         int[] getResult() {
             int won = player.isAlive() && round > maxRounds ? 1 : 0;
             int perfect = (won == 1 && player.hp == 100) ? 1 : 0;
-            int achievement = (won == 1 && player.hp >= 80) ? 1 : 0;
+            int achievement = (won == 1 && player.gotThreeSevens) ? 1 : 0;
             return new int[]{won, perfect, achievement};
         }
 
@@ -197,6 +197,9 @@ public class CloverPit {
                 if (a == Symbol.QUESTION) {
                     giveItem(true);
                     return;
+                }
+                if (a == Symbol.SEVEN) {
+                    player.gotThreeSevens = true;
                 }
                 int reward = a.threeReward;
                 player.money += reward;
@@ -259,6 +262,7 @@ public class CloverPit {
         int hp = 100;
         boolean lucky7 = false;
         boolean luckyDiamond = false;
+        boolean gotThreeSevens = false;
         List<Item> items = new ArrayList<>();
 
         boolean isAlive() { return hp > 0; }
