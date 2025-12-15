@@ -250,7 +250,7 @@ public class Opening {
 
     public void cloverPitAchievement() {
         StoryPrinter.printSlowWithSkip("[Achievement Unlocked] \n" + 
-                        "Coin Master: \n" + 
-                        "You used the Coin Manipulator three times and still came out on top.\n" );
+                        "Lucky Dog: \n" +
+                        "Get three SEVEN symbols in a single spin.\n" );
     }
 }
