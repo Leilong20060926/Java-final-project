@@ -9,7 +9,13 @@ public class CloverPit {
 
     public static void main(String[] args) {
         showRules();
-        new Game().start();
+        new CloverPit().start();
+    }
+    
+    public int[] start() {
+        Game game = new Game();
+        game.play();
+        return game.getResult();
     }
 
     /* =======================
@@ -110,7 +116,7 @@ public class CloverPit {
         int debt = 20;
         Player player = new Player();
 
-        void start() {
+        void play() {
             typePrintln("Game Start!", 30);
 
             player.addItem(new LuckyCharm());
@@ -147,6 +153,13 @@ public class CloverPit {
             } else {
                 typePrintln("GAME OVER...", 40);
             }
+        }
+
+        int[] getResult() {
+            int won = player.isAlive() && round > maxRounds ? 1 : 0;
+            int perfect = (won == 1 && player.hp == 100) ? 1 : 0;
+            int achievement = (won == 1 && player.hp >= 80) ? 1 : 0;
+            return new int[]{won, perfect, achievement};
         }
 
         void showStatus() {
